@@ -1,0 +1,18 @@
+import React from 'react'
+import { useNavigate } from 'react-router-dom';
+
+const Home = () => {
+
+    let navigate = useNavigate();
+
+  return (
+    <div className='grid h-screen flex justify-center content-center '>
+        <h1 className= 'text-5xl font-bold' > Group 11 </h1>
+        <div className='border flex justify-center content-center m-4 rounded-2xl hover:cursor-pointer hover:bg-slate-300 hover:text-white' onClick={() => {navigate('/N-Queen')}}>
+            <p className='m-2'>N-Queen</p>
+        </div>
+    </div>
+  )
+}
+
+export default Home
