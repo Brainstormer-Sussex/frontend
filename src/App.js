@@ -1,15 +1,19 @@
 import './App.css';
-import Home from './Pages/Home';
-import NQueen from './Pages/NQueen';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ROUTES } from './utils';
+import {
+  LoadingSpinner
+} from './components';
 
 function App() {
   return (
     <div className="App">
+      <LoadingSpinner />
       <Router>
         <Routes>
-          <Route path='' element={<Home/>}/>
-          <Route path='N-Queen' element={<NQueen/>}/>
+          {ROUTES.map((route, index) => {
+            return <Route key={index} {...route} />
+          })}
         </Routes>
       </Router>
     </div>
