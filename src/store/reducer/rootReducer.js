@@ -20,10 +20,22 @@ const alertPersistConfig = {
 	whitelist: [],
 }
 
+const chessboardPersistConfig = {
+	key: 'chessboard',
+	storage: storage,
+	whitelist: [
+		'dimensions',
+		'position',
+		'allPermutations',
+		'permutations',
+		'resultFound'
+	],
+}
+
 
 const rootReducer = combineReducers({
 	loading: loadingReducer,
-	chessboard: chessboardReducer,
+	chessboard: persistReducer(chessboardPersistConfig, chessboardReducer),
 	alert: persistReducer(alertPersistConfig, alertReducer),
 })
 

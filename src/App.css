@@ -23,3 +23,15 @@ input{
   font-size:1.1rem;
   outline: none;
 }
+.btn-chessboard{
+
+}
+.btn-chessboard:hover{
+  background-color: #5e5151;
+  color: white;
+}
+
+.all-btn-chessboard{
+  background-color: #7bc573;
+  color: white;
+}
