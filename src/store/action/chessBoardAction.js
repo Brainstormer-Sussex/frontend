@@ -8,12 +8,21 @@ import { alertActions } from './alertAction'
 
 export const chessBoardAction = {
 	GENERATE_NQUEEN_PERMUTATION_CHESSBOARD,
+	RESET_NQUEEN_PERMUTATION_CHESSBOARD
+}
+
+function RESET_NQUEEN_PERMUTATION_CHESSBOARD() {
+	return (dispatch) => {
+		dispatch(request())
+	}
+	function request() {
+		return { type: CHESS_BOARD_CONSTANTS.RESET_CHESSBOARD }
+	}
 }
 
 function GENERATE_NQUEEN_PERMUTATION_CHESSBOARD(requestData = {}) {
-	console.log(HELPER.isNotEmpty([]) );
 	return (dispatch, getState) => {
-		dispatch(request())
+		dispatch(request(requestData))
 		dispatch(generalAction.SHOW_LOADER())
 		apiService
 			.findPossiblePermutations(requestData)
@@ -24,7 +33,6 @@ function GENERATE_NQUEEN_PERMUTATION_CHESSBOARD(requestData = {}) {
 					responseStatus === CONSTANTS.HTTP_RESPONSE.SUCCESS
 				) {
 					const responseBody = response?.data?.body
-                    console.log("responseBody: ", responseBody);
 					dispatch(generalAction.HIDE_LOADER())
 					dispatch(success(responseBody))
 				}
@@ -36,14 +44,15 @@ function GENERATE_NQUEEN_PERMUTATION_CHESSBOARD(requestData = {}) {
 				dispatch(generalAction.HIDE_LOADER())
 				if(HELPER.isNotEmpty(error_message)){
 					dispatch(alertActions.error(error_message))
+					alert(error_message);
 				}
 				dispatch(failure({ ...response, error_message: error_message }))
 			})
 	}
-	function request() {
-		return { type: CHESS_BOARD_CONSTANTS.POSSIBLE_PERMUTATIONS.REQUEST }
+	function request(response) {
+		return { type: CHESS_BOARD_CONSTANTS.POSSIBLE_PERMUTATIONS.REQUEST, response }
 	}
-	function success(response, responseObj) {
+	function success(response) {
 		return {
 			type: CHESS_BOARD_CONSTANTS.POSSIBLE_PERMUTATIONS.SUCCESS,
 			response,
