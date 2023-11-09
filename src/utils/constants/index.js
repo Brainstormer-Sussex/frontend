@@ -1,6 +1,7 @@
 export const ROUTE_CONSTANTS = {
     BASE: '/',
     HOME: '/home',
+	KANOODLE: '/kanoodle',
     ANY: '*',
 };
 
