@@ -498,7 +498,6 @@ export default function useKanoodle() {
         for (Row = 0; Row < Board.Height; Row++) {
             for (Col = 0; Col < Board.Width; Col++) {
                 Class = CellClass(Board, Col, Row);
-                console.log("Class: ", Class)
                 $("#workcell" + Col + "x" + Row).attr('class', "wc " + Class);
             }
         }

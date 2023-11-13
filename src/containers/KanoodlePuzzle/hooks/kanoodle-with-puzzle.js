@@ -1,148 +1,139 @@
 import $ from 'jquery'
 let i;
 
-var BoardConfig = [
-    "XXXXXXXXXXX",
-    "XXXXXXXXXXX",
-    "XXXXXXXXXXX",
-    "XXXXXXXXXXX",
-    "XXXXXXXXXXX",
-];
+export default function useKanoodleWithPuzzlePiece() {
+    var BoardConfig = [
+        "XXXXXXXXXXX",
+        "XXXXXXXXXXX",
+        "XXXXXXXXXXX",
+        "XXXXXXXXXXX",
+        "XXXXXXXXXXX",
+    ];
+
+    var Pentominoes = [
+        {
+            Name: "L",
+            Layout: [
+                [1, 1], [1, 2], [1, 3], [1, 4],
+                [2, 1],
+            ]
+        },
+        {
+            Name: "l",
+            Layout: [
+                [1, 1],
+                [2, 1], [1, 2]
+            ]
+        },
+        {
+            Name: "i",
+            Layout: [
+                [1, 1], [1, 2], [1, 3],
+                [2, 3],
+                [3, 3],
+            ]
+        },
+        {
+            Name: "N",
+            Layout: [
+                [1, 1],
+                [2, 1], [2, 2], [2, 3],
+            ]
+        },
+        {
+            Name: "V",
+            Layout: [
+                [1, 2],
+                [2, 1], [2, 2],
+                [3, 2],
+                [4, 2],
+            ]
+        },
+        {
+            Name: "Y",
+            Layout: [
+                [1, 1], [1, 2],
+                [2, 1], [2, 2],
+            ]
+        },
+        {
+            Name: "P",
+            Layout: [
+                [1, 1],
+                [2, 1], [2, 2],
+                [3, 2],
+                [4, 2],
+            ]
+        },
+        {
+            Name: "S",
+            Layout: [
+                [1, 1], [1, 2],
+                [2, 2], [2, 3],
+                [3, 3],
+            ]
+        },
+        {
+            Name: "U",
+            Layout: [
+                [1, 2],
+                [2, 1], [2, 2], [2, 3],
+                [3, 2], // [3, 2],
+            ]
+        },
+        {
+            Name: "X",
+            Layout: [
+                [1, 1], [1, 2], [1, 3],
+                [2, 2], [2, 3],
+            ]
+        },
+        {
+            Name: "I",
+            Layout: [
+                [1, 1], [1, 2],
+                [2, 2],
+                [3, 1], [3, 2],
+            ]
+        },
+        {
+            Name: "W",
+            Layout: [
+                [1, 1], [1, 2], [1, 3], [1, 4],
+            ]
+        },
+    ];
 
 
-var Pentominoes = [
-    {
-        Name: "L",
-        Layout: [
-            [1, 1], [1, 2], [1, 3], [1, 4],
-            [2, 1],
-        ]
-    },
-    {
-        Name: "l",
-        Layout: [
-            [1, 1],
-            [2, 1], [1, 2]
-        ]
-    },
-    {
-        Name: "i",
-        Layout: [
-            [1, 1], [1, 2], [1, 3],
-            [2, 3],
-            [3, 3],
-        ]
-    },
-    {
-        Name: "N",
-        Layout: [
-            [1, 1],
-            [2, 1], [2, 2], [2, 3],
-        ]
-    },
-    {
-        Name: "V",
-        Layout: [
-            [1, 2],
-            [2, 1], [2, 2],
-            [3, 2],
-            [4, 2],
-        ]
-    },
-    {
-        Name: "Y",
-        Layout: [
-            [1, 1], [1, 2],
-            [2, 1], [2, 2],
-        ]
-    },
-    {
-        Name: "P",
-        Layout: [
-            [1, 1],
-            [2, 1], [2, 2],
-            [3, 2],
-            [4, 2],
-        ]
-    },
-    {
-        Name: "S",
-        Layout: [
-            [1, 1], [1, 2],
-            [2, 2], [2, 3],
-            [3, 3],
-        ]
-    },
-    {
-        Name: "U",
-        Layout: [
-            [1, 2],
-            [2, 1], [2, 2], [2, 3],
-            [3, 2], // [3, 2],
-        ]
-    },
-    {
-        Name: "X",
-        Layout: [
-            [1, 1], [1, 2], [1, 3],
-            [2, 2], [2, 3],
-        ]
-    },
-    {
-        Name: "I",
-        Layout: [
-            [1, 1], [1, 2],
-            [2, 2],
-            [3, 1], [3, 2],
-        ]
-    },
-    {
-        Name: "W",
-        Layout: [
-            [1, 1], [1, 2], [1, 3], [1, 4],
-        ]
-    },
-];
+    var Shapes = [];
 
+    var Board = {};
 
-var Shapes = [];
+    var WebWorker = null;
+    var Solutions = 0;
+    var SolHash = {};
 
-var Board = {};
+    Object.prototype.clone = function () {
+        var newObj = (this instanceof Array) ? [] : {};
+        for (i in this) {
+            if (i === 'clone') continue;
+            if (this[i] && typeof this[i] === "object") {
+                newObj[i] = this[i].clone();
+            } else newObj[i] = this[i]
+        } return newObj;
+    };
 
-var WebWorker = null;
-var Solutions = 0;
-var SolHash = {};
-
-Object.prototype.clone = function () {
-    var newObj = (this instanceof Array) ? [] : {};
-    for (i in this) {
-        if (i === 'clone') continue;
-        if (this[i] && typeof this[i] === "object") {
-            newObj[i] = this[i].clone();
-        } else newObj[i] = this[i]
-    } return newObj;
-};
-
-
-class Kanoodle {
-    constructor() {
-
-    }
-
-    StartWorker() {
-        this.Initialise();
+    function StartPuzzleWorker() {
+        Initialise();
 
         try {
             if (typeof (Worker) !== "undefined") {
-                // const worker = new WorkerFactory(webWorker);
-                // WebWorker = new Worker(`../../../worker/app.worker.js`);
                 WebWorker = new Worker(`${process.env.REACT_APP_PUBLIC_URL}/worker/app.worker.js`);
-                // WebWorker = new Worker(new URL('../../../worker/app.worker.js', import.meta.url));
                 if (window.Worker) {
                     // Web workers are supported
                     console.log("Web workers are supported")
                 
-                    WebWorker.addEventListener('message', this.MessageCb, false);
+                    WebWorker.addEventListener('message', MessageCb, false);
                     WebWorker.postMessage({ 'MsgType': "start", 'Shapes': JSON.stringify(Shapes), 'Board': JSON.stringify(Board) });
                 } else {
                     // Web workers are not supported
@@ -150,7 +141,7 @@ class Kanoodle {
                 }
             }
             else {
-                this.WorkerStopped();
+                WorkerStopped();
                 alert("This browser does not support Web Workers! Try Chrome, Firefox, Opera or Safari");
             }
         }
@@ -159,46 +150,46 @@ class Kanoodle {
         }
     }
 
-    StopWorker() {
+    function StopPuzzleWorker() {
         WebWorker.terminate();
-        this.WorkerStopped();
+        WorkerStopped();
     }
 
-    WorkerStopped() {
+    function WorkerStopped() {
         WebWorker = null;
         $("#stopbtn").remove();
     }
 
-    MessageCb(Event) {
+    function MessageCb(Event) {
         var Data = Event.data;
         var Board;
         console.log("--MessageCb--");
         console.log("MsgType:",Data.MsgType)
         switch (Data.MsgType) {
             case "debug":
-                this.Debug(Data.Msg);
+                Debug(Data.Msg);
                 break;
 
             case "solution":
                 Board = JSON.parse(Data.Board);
-                if (!this.DuplicateSolution(Board, Shapes)) {
-                    this.DumpBoard(Board, Shapes);
+                if (!DuplicateSolution(Board, Shapes)) {
+                    DumpBoard(Board, Shapes);
                 }
                 break;
 
             case "workupdate":
                 Board = JSON.parse(Data.Board);
-                this.UpdateWorkBoard(Board);
+                UpdateWorkBoard(Board);
                 break;
 
             case "finished":
-                this.StopWorker();
+                StopPuzzleWorker();
                 break;
 
         }
     }
 
-    DuplicateSolution(Board, Shapes) {
+    function DuplicateSolution(Board, Shapes) {
         var Dupe = false;
         var String = "";
         var CurShape;
@@ -222,7 +213,7 @@ class Kanoodle {
         return Dupe;
     }
 
-    Initialise() {
+    function Initialise() {
         var CurShape;
         var i, j, k;
 
@@ -232,25 +223,27 @@ class Kanoodle {
             Shapes[i].Layout = [];
             Shapes[i].Name = Pentominoes[i].Name;
             Shapes[i].Colour = Pentominoes[i].Colour;
+            console.log("shapes: ", Shapes)
             for (k = 0; k < 3; k++) {
+                console.log('k: ', k)
                 CurShape = Pentominoes[i].Layout;
                 switch (k) {
                     case 0:
-                        CurShape = this.ShiftShape(CurShape);
-                        CurShape.sort(this.LocCompare);
+                        CurShape = ShiftShape(CurShape);
+                        CurShape.sort(LocCompare);
                         break;
                     case 1:
-                        CurShape = this.FlipShapeX(CurShape);
+                        CurShape = FlipShapeX(CurShape);
                         break;
                     case 2:
-                        CurShape = this.FlipShapeY(CurShape);
+                        CurShape = FlipShapeY(CurShape);
                         break;
                 }
                 for (j = 0; j < 4; j++) {
-                    if (!this.DuplicateLayout(Shapes[i].Layout, CurShape)) {
-                        this.AddLayout(i, CurShape);
+                    if (!DuplicateLayout(Shapes[i].Layout, CurShape)) {
+                        AddLayout(i, CurShape);
                     }
-                    CurShape = this.RotateShape(CurShape);
+                    CurShape = RotateShape(CurShape);
                 }
             }
             /*
@@ -277,22 +270,22 @@ class Kanoodle {
             Board.Layout.push(Col);
         }
 
-        this.DrawWorkBoard(Board);
+        DrawWorkBoard(Board);
     }
 
-    AddLayout(ShapeNo, Layout) {
+    function AddLayout(ShapeNo, Layout) {
         Shapes[ShapeNo].Layout.push(Layout);
     }
 
-    DuplicateLayout(Layouts, Shape) {
+    function DuplicateLayout(Layouts, Shape) {
         for (var i = 0; i < Layouts.length; i++) {
-            if (this.CompareShape(Layouts[i], Shape)) return true;
+            if (CompareShape(Layouts[i], Shape)) return true;
         }
 
         return false;
     }
 
-    CompareShape(Shape1, Shape2) {
+    function CompareShape(Shape1, Shape2) {
         if (Shape1.length !== Shape2.length) return false;
 
         for (var i = 0; i < Shape1.length; i++) {
@@ -303,7 +296,7 @@ class Kanoodle {
         return true;
     }
 
-    ShiftShape(Shape) {
+    function ShiftShape(Shape) {
         // console.log("Shape:  ",Shape);
         var NewShape = Shape.clone();
         // console.log("NewShape:  ",NewShape);
@@ -325,7 +318,7 @@ class Kanoodle {
         return NewShape;
     }
 
-    RotateShape(Shape) {
+    function RotateShape(Shape) {
         var NewShape = Shape.clone();
 
         for (var i = 0; i < NewShape.length; i++) {
@@ -334,34 +327,34 @@ class Kanoodle {
             NewShape[i][0] = 6 - y;
             NewShape[i][1] = x;
         }
-        NewShape.sort(this.LocCompare);
+        NewShape.sort(LocCompare);
 
-        return this.ShiftShape(NewShape);
+        return ShiftShape(NewShape);
     }
 
-    FlipShapeX(Shape) {
+    function FlipShapeX(Shape) {
         var NewShape = Shape.clone();
 
         for (var i = 0; i < NewShape.length; i++) {
             NewShape[i][0] = 6 - NewShape[i][0];
         }
-        NewShape.sort(this.LocCompare);
+        NewShape.sort(LocCompare);
 
-        return this.ShiftShape(NewShape);
+        return ShiftShape(NewShape);
     }
 
-    FlipShapeY(Shape) {
+    function FlipShapeY(Shape) {
         var NewShape = Shape.clone();
 
         for (var i = 0; i < NewShape.length; i++) {
             NewShape[i][1] = 6 - NewShape[i][1];
         }
-        NewShape.sort(this.LocCompare);
+        NewShape.sort(LocCompare);
 
-        return this.ShiftShape(NewShape);
+        return ShiftShape(NewShape);
     }
 
-    LocCompare(Loc1, Loc2) {
+    function LocCompare(Loc1, Loc2) {
         if (Loc1[0] < Loc2[0]) return -1;
         if (Loc1[0] > Loc2[0]) return 1;
         if (Loc1[1] < Loc2[1]) return -1;
@@ -369,7 +362,7 @@ class Kanoodle {
         return 0;
     }
 
-    DumpBoard(Board, Shapes) {
+    function DumpBoard(Board, Shapes) {
         var Row;
         var Col;
         var Table;
@@ -378,7 +371,7 @@ class Kanoodle {
         for (Row = 0; Row < Board.Height; Row++) {
             Table += '<tr class="sr">';
             for (Col = 0; Col < Board.Width; Col++) {
-                Table += '<td class="sc ' + this.CellClass(Board, Col, Row) + '"/>';
+                Table += '<td class="sc ' + CellClass(Board, Col, Row) + '"/>';
             }
             Table += "</tr>"
         }
@@ -389,7 +382,7 @@ class Kanoodle {
         $("#solcnt").text(++Solutions);
     }
 
-    DrawWorkBoard(Board) {
+    function DrawWorkBoard(Board) {
         var Row;
         var Col;
         var Table;
@@ -407,7 +400,7 @@ class Kanoodle {
         $("#work").append(Table);
     }
 
-    UpdateWorkBoard(Board) {
+    function UpdateWorkBoard(Board) {
         console.log("--UpdateWorkBoard--")
         var Row;
         var Col;
@@ -415,14 +408,13 @@ class Kanoodle {
 
         for (Row = 0; Row < Board.Height; Row++) {
             for (Col = 0; Col < Board.Width; Col++) {
-                Class = this.CellClass(Board, Col, Row);
-                console.log("Class: ", Class)
+                Class = CellClass(Board, Col, Row);
                 $("#workcell" + Col + "x" + Row).attr('class', "wc " + Class);
             }
         }
     }
 
-    CellClass(Board, Col, Row) {
+    function CellClass(Board, Col, Row) {
         var CurShape;
         var Class;
 
@@ -449,10 +441,14 @@ class Kanoodle {
         return Class;
     }
 
-    Debug(Msg) {
+    function Debug(Msg) {
         $("#debug").append('<p class="debug">' + Msg + "</p>");
     }
+
+    return {
+        StartPuzzleWorker,
+        StopPuzzleWorker,
+        WorkerStopped,
+        MessageCb,
+    }
 }
-
-
-export default Kanoodle;
