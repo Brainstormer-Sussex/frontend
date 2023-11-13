@@ -1,230 +1,148 @@
 import $ from 'jquery'
 let i;
 
-export default function useKanoodle() {
-    var BoardConfig = [
-        "XXXXXXXXXXX",
-        "XXXXXXXXXXX",
-        "XXXXXXXXXXX",
-        "XXXXXXXXXXX",
-        "XXXXXXXXXXX",
-    ];
+var BoardConfig = [
+    "XXXXXXXXXXX",
+    "XXXXXXXXXXX",
+    "XXXXXXXXXXX",
+    "XXXXXXXXXXX",
+    "XXXXXXXXXXX",
+];
 
-    /*
-    var Pentominoes = [
+
+var Pentominoes = [
     {
         Name: "L",
         Layout: [
-        [1,1],
-        [1,2],
-        [1,3],
-        [1,4],[2,4]
-        ]},
+            [1, 1], [1, 2], [1, 3], [1, 4],
+            [2, 1],
+        ]
+    },
     {
         Name: "l",
         Layout: [
-        [1,1],
-        [1,2],
-        [1,3],[2,3]
-        ]},
+            [1, 1],
+            [2, 1], [1, 2]
+        ]
+    },
     {
         Name: "i",
         Layout: [
-        [1,1],
-        [1,2],[2,2]
-        ]},
+            [1, 1], [1, 2], [1, 3],
+            [2, 3],
+            [3, 3],
+        ]
+    },
     {
         Name: "N",
         Layout: [
-              [2,1],
-              [2,2],
-        [1,3],[2,3],
-        [1,4]
-        ]},
+            [1, 1],
+            [2, 1], [2, 2], [2, 3],
+        ]
+    },
     {
         Name: "V",
         Layout: [
-        [1,1],
-        [1,2],
-        [1,3],[2,3],[3,3]
-        ]},
-    {
-        Name: "P",
-        Layout: [
-        [1,1],[2,1],
-        [1,2],[2,2],
-        [1,3]
-        ]},
-    {
-        Name: "S",
-        Layout: [
-        [1,1],[2,1],
-        [1,2],[2,2],
-        ]},
-    {
-        Name: "U",
-        Layout: [
-        [1,1],      [3,1],
-        [1,2],[2,2],[3,2]
-        ]},
-    {
-        Name: "W",
-        Layout: [
-        [1,1],
-        [1,2],[2,2],
-              [2,3],[3,3]
-        ]},
-    {
-        Name: "X",
-        Layout: [
-              [2,1],
-        [1,2],[2,2],[3,2],
-              [2,3]
-        ]},
+            [1, 2],
+            [2, 1], [2, 2],
+            [3, 2],
+            [4, 2],
+        ]
+    },
     {
         Name: "Y",
         Layout: [
-        [1,1],
-        [1,2],
-        [1,3],[2,3],
-        [1,4]
-        ]},
+            [1, 1], [1, 2],
+            [2, 1], [2, 2],
+        ]
+    },
+    {
+        Name: "P",
+        Layout: [
+            [1, 1],
+            [2, 1], [2, 2],
+            [3, 2],
+            [4, 2],
+        ]
+    },
+    {
+        Name: "S",
+        Layout: [
+            [1, 1], [1, 2],
+            [2, 2], [2, 3],
+            [3, 3],
+        ]
+    },
+    {
+        Name: "U",
+        Layout: [
+            [1, 2],
+            [2, 1], [2, 2], [2, 3],
+            [3, 2], // [3, 2],
+        ]
+    },
+    {
+        Name: "X",
+        Layout: [
+            [1, 1], [1, 2], [1, 3],
+            [2, 2], [2, 3],
+        ]
+    },
     {
         Name: "I",
         Layout: [
-        [1,1],
-        [1,2],
-        [1,3],
-        [1,4],
-        ]},
-    ];
-    */
+            [1, 1], [1, 2],
+            [2, 2],
+            [3, 1], [3, 2],
+        ]
+    },
+    {
+        Name: "W",
+        Layout: [
+            [1, 1], [1, 2], [1, 3], [1, 4],
+        ]
+    },
+];
 
 
-    var Pentominoes = [
-        {
-            Name: "L",
-            Layout: [
-                [1, 1], [1, 2], [1, 3], [1, 4],
-                [2, 1],
-            ]
-        },
-        {
-            Name: "l",
-            Layout: [
-                [1, 1],
-                [2, 1], [1, 2]
-            ]
-        },
-        {
-            Name: "i",
-            Layout: [
-                [1, 1], [1, 2], [1, 3],
-                [2, 3],
-                [3, 3],
-            ]
-        },
-        {
-            Name: "N",
-            Layout: [
-                [1, 1],
-                [2, 1], [2, 2], [2, 3],
-            ]
-        },
-        {
-            Name: "V",
-            Layout: [
-                [1, 2],
-                [2, 1], [2, 2],
-                [3, 2],
-                [4, 2],
-            ]
-        },
-        {
-            Name: "Y",
-            Layout: [
-                [1, 1], [1, 2],
-                [2, 1], [2, 2],
-            ]
-        },
-        {
-            Name: "P",
-            Layout: [
-                [1, 1],
-                [2, 1], [2, 2],
-                [3, 2],
-                [4, 2],
-            ]
-        },
-        {
-            Name: "S",
-            Layout: [
-                [1, 1], [1, 2],
-                [2, 2], [2, 3],
-                [3, 3],
-            ]
-        },
-        {
-            Name: "U",
-            Layout: [
-                [1, 2],
-                [2, 1], [2, 2], [2, 3],
-                [3, 2], // [3, 2],
-            ]
-        },
-        {
-            Name: "X",
-            Layout: [
-                [1, 1], [1, 2], [1, 3],
-                [2, 2], [2, 3],
-            ]
-        },
-        {
-            Name: "I",
-            Layout: [
-                [1, 1], [1, 2],
-                [2, 2],
-                [3, 1], [3, 2],
-            ]
-        },
-        {
-            Name: "W",
-            Layout: [
-                [1, 1], [1, 2], [1, 3], [1, 4],
-            ]
-        },
-    ];
+var Shapes = [];
+
+var Board = {};
+
+var WebWorker = null;
+var Solutions = 0;
+var SolHash = {};
+
+Object.prototype.clone = function () {
+    var newObj = (this instanceof Array) ? [] : {};
+    for (i in this) {
+        if (i === 'clone') continue;
+        if (this[i] && typeof this[i] === "object") {
+            newObj[i] = this[i].clone();
+        } else newObj[i] = this[i]
+    } return newObj;
+};
 
 
-    var Shapes = [];
+class Kanoodle {
+    constructor() {
 
-    var Board = {};
+    }
 
-    var WebWorker = null;
-    var Solutions = 0;
-    var SolHash = {};
-
-    Object.prototype.clone = function () {
-        var newObj = (this instanceof Array) ? [] : {};
-        for (i in this) {
-            if (i === 'clone') continue;
-            if (this[i] && typeof this[i] === "object") {
-                newObj[i] = this[i].clone();
-            } else newObj[i] = this[i]
-        } return newObj;
-    };
-
-    function StartWorker() {
-        Initialise();
+    StartWorker() {
+        this.Initialise();
 
         try {
             if (typeof (Worker) !== "undefined") {
+                // const worker = new WorkerFactory(webWorker);
+                // WebWorker = new Worker(`../../../worker/app.worker.js`);
                 WebWorker = new Worker(`${process.env.REACT_APP_PUBLIC_URL}/worker/app.worker.js`);
+                // WebWorker = new Worker(new URL('../../../worker/app.worker.js', import.meta.url));
                 if (window.Worker) {
                     // Web workers are supported
                     console.log("Web workers are supported")
                 
-                    WebWorker.addEventListener('message', MessageCb, false);
+                    WebWorker.addEventListener('message', this.MessageCb, false);
                     WebWorker.postMessage({ 'MsgType': "start", 'Shapes': JSON.stringify(Shapes), 'Board': JSON.stringify(Board) });
                 } else {
                     // Web workers are not supported
@@ -232,7 +150,7 @@ export default function useKanoodle() {
                 }
             }
             else {
-                WorkerStopped();
+                this.WorkerStopped();
                 alert("This browser does not support Web Workers! Try Chrome, Firefox, Opera or Safari");
             }
         }
@@ -241,46 +159,46 @@ export default function useKanoodle() {
         }
     }
 
-    function StopWorker() {
+    StopWorker() {
         WebWorker.terminate();
-        WorkerStopped();
+        this.WorkerStopped();
     }
 
-    function WorkerStopped() {
+    WorkerStopped() {
         WebWorker = null;
         $("#stopbtn").remove();
     }
 
-    function MessageCb(Event) {
+    MessageCb(Event) {
         var Data = Event.data;
         var Board;
         console.log("--MessageCb--");
         console.log("MsgType:",Data.MsgType)
         switch (Data.MsgType) {
             case "debug":
-                Debug(Data.Msg);
+                this.Debug(Data.Msg);
                 break;
 
             case "solution":
                 Board = JSON.parse(Data.Board);
-                if (!DuplicateSolution(Board, Shapes)) {
-                    DumpBoard(Board, Shapes);
+                if (!this.DuplicateSolution(Board, Shapes)) {
+                    this.DumpBoard(Board, Shapes);
                 }
                 break;
 
             case "workupdate":
                 Board = JSON.parse(Data.Board);
-                UpdateWorkBoard(Board);
+                this.UpdateWorkBoard(Board);
                 break;
 
             case "finished":
-                StopWorker();
+                this.StopWorker();
                 break;
 
         }
     }
 
-    function DuplicateSolution(Board, Shapes) {
+    DuplicateSolution(Board, Shapes) {
         var Dupe = false;
         var String = "";
         var CurShape;
@@ -304,7 +222,7 @@ export default function useKanoodle() {
         return Dupe;
     }
 
-    function Initialise() {
+    Initialise() {
         var CurShape;
         var i, j, k;
 
@@ -318,21 +236,21 @@ export default function useKanoodle() {
                 CurShape = Pentominoes[i].Layout;
                 switch (k) {
                     case 0:
-                        CurShape = ShiftShape(CurShape);
-                        CurShape.sort(LocCompare);
+                        CurShape = this.ShiftShape(CurShape);
+                        CurShape.sort(this.LocCompare);
                         break;
                     case 1:
-                        CurShape = FlipShapeX(CurShape);
+                        CurShape = this.FlipShapeX(CurShape);
                         break;
                     case 2:
-                        CurShape = FlipShapeY(CurShape);
+                        CurShape = this.FlipShapeY(CurShape);
                         break;
                 }
                 for (j = 0; j < 4; j++) {
-                    if (!DuplicateLayout(Shapes[i].Layout, CurShape)) {
-                        AddLayout(i, CurShape);
+                    if (!this.DuplicateLayout(Shapes[i].Layout, CurShape)) {
+                        this.AddLayout(i, CurShape);
                     }
-                    CurShape = RotateShape(CurShape);
+                    CurShape = this.RotateShape(CurShape);
                 }
             }
             /*
@@ -359,22 +277,22 @@ export default function useKanoodle() {
             Board.Layout.push(Col);
         }
 
-        DrawWorkBoard(Board);
+        this.DrawWorkBoard(Board);
     }
 
-    function AddLayout(ShapeNo, Layout) {
+    AddLayout(ShapeNo, Layout) {
         Shapes[ShapeNo].Layout.push(Layout);
     }
 
-    function DuplicateLayout(Layouts, Shape) {
+    DuplicateLayout(Layouts, Shape) {
         for (var i = 0; i < Layouts.length; i++) {
-            if (CompareShape(Layouts[i], Shape)) return true;
+            if (this.CompareShape(Layouts[i], Shape)) return true;
         }
 
         return false;
     }
 
-    function CompareShape(Shape1, Shape2) {
+    CompareShape(Shape1, Shape2) {
         if (Shape1.length !== Shape2.length) return false;
 
         for (var i = 0; i < Shape1.length; i++) {
@@ -385,7 +303,7 @@ export default function useKanoodle() {
         return true;
     }
 
-    function ShiftShape(Shape) {
+    ShiftShape(Shape) {
         // console.log("Shape:  ",Shape);
         var NewShape = Shape.clone();
         // console.log("NewShape:  ",NewShape);
@@ -407,7 +325,7 @@ export default function useKanoodle() {
         return NewShape;
     }
 
-    function RotateShape(Shape) {
+    RotateShape(Shape) {
         var NewShape = Shape.clone();
 
         for (var i = 0; i < NewShape.length; i++) {
@@ -416,34 +334,34 @@ export default function useKanoodle() {
             NewShape[i][0] = 6 - y;
             NewShape[i][1] = x;
         }
-        NewShape.sort(LocCompare);
+        NewShape.sort(this.LocCompare);
 
-        return ShiftShape(NewShape);
+        return this.ShiftShape(NewShape);
     }
 
-    function FlipShapeX(Shape) {
+    FlipShapeX(Shape) {
         var NewShape = Shape.clone();
 
         for (var i = 0; i < NewShape.length; i++) {
             NewShape[i][0] = 6 - NewShape[i][0];
         }
-        NewShape.sort(LocCompare);
+        NewShape.sort(this.LocCompare);
 
-        return ShiftShape(NewShape);
+        return this.ShiftShape(NewShape);
     }
 
-    function FlipShapeY(Shape) {
+    FlipShapeY(Shape) {
         var NewShape = Shape.clone();
 
         for (var i = 0; i < NewShape.length; i++) {
             NewShape[i][1] = 6 - NewShape[i][1];
         }
-        NewShape.sort(LocCompare);
+        NewShape.sort(this.LocCompare);
 
-        return ShiftShape(NewShape);
+        return this.ShiftShape(NewShape);
     }
 
-    function LocCompare(Loc1, Loc2) {
+    LocCompare(Loc1, Loc2) {
         if (Loc1[0] < Loc2[0]) return -1;
         if (Loc1[0] > Loc2[0]) return 1;
         if (Loc1[1] < Loc2[1]) return -1;
@@ -451,7 +369,7 @@ export default function useKanoodle() {
         return 0;
     }
 
-    function DumpBoard(Board, Shapes) {
+    DumpBoard(Board, Shapes) {
         var Row;
         var Col;
         var Table;
@@ -460,7 +378,7 @@ export default function useKanoodle() {
         for (Row = 0; Row < Board.Height; Row++) {
             Table += '<tr class="sr">';
             for (Col = 0; Col < Board.Width; Col++) {
-                Table += '<td class="sc ' + CellClass(Board, Col, Row) + '"/>';
+                Table += '<td class="sc ' + this.CellClass(Board, Col, Row) + '"/>';
             }
             Table += "</tr>"
         }
@@ -471,7 +389,7 @@ export default function useKanoodle() {
         $("#solcnt").text(++Solutions);
     }
 
-    function DrawWorkBoard(Board) {
+    DrawWorkBoard(Board) {
         var Row;
         var Col;
         var Table;
@@ -489,7 +407,7 @@ export default function useKanoodle() {
         $("#work").append(Table);
     }
 
-    function UpdateWorkBoard(Board) {
+    UpdateWorkBoard(Board) {
         console.log("--UpdateWorkBoard--")
         var Row;
         var Col;
@@ -497,14 +415,14 @@ export default function useKanoodle() {
 
         for (Row = 0; Row < Board.Height; Row++) {
             for (Col = 0; Col < Board.Width; Col++) {
-                Class = CellClass(Board, Col, Row);
+                Class = this.CellClass(Board, Col, Row);
                 console.log("Class: ", Class)
                 $("#workcell" + Col + "x" + Row).attr('class', "wc " + Class);
             }
         }
     }
 
-    function CellClass(Board, Col, Row) {
+    CellClass(Board, Col, Row) {
         var CurShape;
         var Class;
 
@@ -531,14 +449,10 @@ export default function useKanoodle() {
         return Class;
     }
 
-    function Debug(Msg) {
+    Debug(Msg) {
         $("#debug").append('<p class="debug">' + Msg + "</p>");
     }
-
-    return {
-        StartWorker,
-        StopWorker,
-        WorkerStopped,
-        MessageCb,
-    }
 }
+
+
+export default Kanoodle;
