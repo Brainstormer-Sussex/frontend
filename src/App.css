@@ -35,3 +35,8 @@ input{
   background-color: #7bc573;
   color: white;
 }
+
+.disabled {
+  background-color: #c57373;
+  color: white;
+}
