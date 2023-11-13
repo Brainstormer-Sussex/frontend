@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect} from "react";
+import { useState } from "react";
 import { NavBar } from "../../components";
 import { Draggable, Droppable} from 'react-drag-and-drop';
 

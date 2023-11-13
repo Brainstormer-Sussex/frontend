@@ -26,7 +26,7 @@ function NQueenProblem() {
     const [dimension, setDimension] = useState(dimensions);
     const [chess, setChess] = useState(100 / dimension);
     const [size, setSize] = useState(0);
-    const [clickedCell, setClickedCell] = useState(null);
+    // const [clickedCell, setClickedCell] = useState(null);
     const [queens, setQueens] = useState();
     const [queenPositions, setQueenPositions] = useState([]);
     const [focusedPermutation, setFocusedPermutation] = useState([]);
@@ -127,7 +127,7 @@ function NQueenProblem() {
     }
 
     const generateChessBoard = () => {
-        if(!HELPER.isNotEmpty(queenPositions) || queenPositions == []){
+        if(!HELPER.isNotEmpty(queenPositions) || queenPositions === []){
             alert('Select queen position first');
         }else{
             const value = parseInt(dimension, 10);
@@ -143,13 +143,13 @@ function NQueenProblem() {
     }
 
     const placeQueenOnChessBoard = async(row, col) => {
-        if((searching || resultFound) && queenPositions != []){
+        if((searching || resultFound) && queenPositions !== []){
             alert('It is not allowed to move queen further. Possible permutation result should be loaded soon!!')
             return;
         }
 
         setQueenPositions([...queenPositions, { row, col }]);
-        setClickedCell({ row, col });
+        // setClickedCell({ row, col });
         makeChessBoard();
 
         const requestData = {
@@ -164,14 +164,14 @@ function NQueenProblem() {
             let _permutations = []; 
             permutations[index].map((value, key) => {
                 value.map((valueA, keyA) => {
-                    if(valueA == 1) {
+                    if(valueA === 1) {
                         return _permutations.push({row: key, col: keyA})
                     }
                 })
             })
             setFocusedPermutation(_permutations);
             setFocusedPermutationCount(index+1);
-        }else if(index == permutations.length && permutations.length > 0) {
+        }else if(index === permutations.length && permutations.length > 0) {
             showAllChessBoardPermutations(0)
         }
         else {
@@ -195,7 +195,7 @@ function NQueenProblem() {
     }, [permutations])
     
     useEffect(() => {
-        if(HELPER.isNotEmpty(focusedPermutation) && focusedPermutation != []){
+        if(HELPER.isNotEmpty(focusedPermutation) && focusedPermutation !== []){
             drawPossibleNQueenPermutations()
         }
     }, [focusedPermutation])

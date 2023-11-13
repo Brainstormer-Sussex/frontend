@@ -18,6 +18,9 @@ const NavBar = () => {
           <div className='  hover:cursor-pointer underline m-2 hover:bg-slate-300' onClick={ () => {navigate(ROUTE_CONSTANTS.KANOODLE)}}>
               Kanoodle
           </div>
+          <div className='  hover:cursor-pointer underline m-2 hover:bg-slate-300' onClick={ () => {navigate(ROUTE_CONSTANTS.KANOODLE_PUZZLE)}}>
+              Kanoodle puzzle
+          </div>
         </div>
         
 

@@ -3,7 +3,8 @@ import { ROUTE_CONSTANTS } from "..";
 import {
 	Home,
 	NQueenProblem,
-	Kanoodle
+	Kanoodle,
+	KanoodlePuzzle
 } from "../../containers";
 
 
@@ -25,5 +26,11 @@ export const ROUTES = [
 		exact: true,
 		element: <Kanoodle/>,
 		view: 'Kanoodle',
-	}
+	},
+	{
+		path: ROUTE_CONSTANTS.KANOODLE_PUZZLE,
+		exact: true,
+		element: <KanoodlePuzzle/>,
+		view: 'kanoodle puzzle',
+	},
 ];
