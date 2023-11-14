@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { NavBar } from "../../components";
-import {
-    DndContext,
-    DragOverlay,
-    useDraggable,
-    useDroppable,
-  } from '@dnd-kit/core';
+// import {
+//     DndContext,
+//     DragOverlay,
+//     useDraggable,
+//     useDroppable,
+//   } from '@dnd-kit/core';
 import Pieces from "./Pieces";
 
 
@@ -45,7 +45,7 @@ function Kanoodle() {
     <div>
         
       <NavBar />
-      <DndContext>
+      {/* <DndContext> */}
       <div className="flex justify-center m-12">
         <h1 className="text-5xl font-medium">Kanoodle</h1>
       </div>
@@ -64,7 +64,7 @@ function Kanoodle() {
         </div>
         
       </div>
-      </DndContext>
+      {/* </DndContext> */}
     </div>
     
   );
