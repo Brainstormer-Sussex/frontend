@@ -220,7 +220,7 @@ export default function useKanoodle() {
         try {
             if (typeof (Worker) !== "undefined") {
                 WebWorker = new Worker(`${process.env.REACT_APP_PUBLIC_URL}/worker/app.worker.js`);
-                if (window.Worker) {
+                if (window.Worker) { 
                     // Web workers are supported
                     console.log("Web workers are supported")
                 
