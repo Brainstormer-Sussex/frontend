@@ -2,7 +2,7 @@ import $ from 'jquery'
 let i;
 
 export default function useKanoodleWithPuzzlePiece() {
-    var BoardConfig = [
+    var KanoodleBoardConfig = [
         "XXXXXXXXXXX",
         "XXXXXXXXXXX",
         "XXXXXXXXXXX",
@@ -10,7 +10,7 @@ export default function useKanoodleWithPuzzlePiece() {
         "XXXXXXXXXXX",
     ];
 
-    var Pentominoes = [
+    var puzzlePieces = [
         {
             Name: "L",
             Layout: [
@@ -123,7 +123,7 @@ export default function useKanoodleWithPuzzlePiece() {
         } return newObj;
     };
 
-    function StartPuzzleWorker() {
+    function StartKanoodleWorker() {
         Initialise();
 
         try {
@@ -150,7 +150,7 @@ export default function useKanoodleWithPuzzlePiece() {
         }
     }
 
-    function StopPuzzleWorker() {
+    function StopKanoodleWorker() {
         WebWorker.terminate();
         WorkerStopped();
     }
@@ -183,7 +183,7 @@ export default function useKanoodleWithPuzzlePiece() {
                 break;
 
             case "finished":
-                StopPuzzleWorker();
+                StopKanoodleWorker();
                 break;
 
         }
@@ -217,16 +217,16 @@ export default function useKanoodleWithPuzzlePiece() {
         var CurShape;
         var i, j, k;
 
-        //    Debug("Using " + Pentominoes.length + " pentominoes: ", Pentominoes);
-        for (i = 0; i < Pentominoes.length; i++) {
+        //    Debug("Using " + puzzlePieces.length + " pentominoes: ", puzzlePieces);
+        for (i = 0; i < puzzlePieces.length; i++) {
             Shapes[i] = {}
             Shapes[i].Layout = [];
-            Shapes[i].Name = Pentominoes[i].Name;
-            Shapes[i].Colour = Pentominoes[i].Colour;
+            Shapes[i].Name = puzzlePieces[i].Name;
+            Shapes[i].Colour = puzzlePieces[i].Colour;
             console.log("shapes: ", Shapes)
             for (k = 0; k < 3; k++) {
                 console.log('k: ', k)
-                CurShape = Pentominoes[i].Layout;
+                CurShape = puzzlePieces[i].Layout;
                 switch (k) {
                     case 0:
                         CurShape = ShiftShape(CurShape);
@@ -247,7 +247,7 @@ export default function useKanoodleWithPuzzlePiece() {
                 }
             }
             /*
-                    Debug("Pentomino " + Pentominoes[i].Name + " has " + Shapes[i].Layout.length + " layouts");
+                    Debug("Pentomino " + puzzlePieces[i].Name + " has " + Shapes[i].Layout.length + " layouts");
                     for(var l=0; l<Shapes[i].Layout.length; l++){
                         Debug(Shapes[i].Layout[l].toString())
                     }
@@ -255,16 +255,16 @@ export default function useKanoodleWithPuzzlePiece() {
         }
 
         Board.Width = 0;
-        Board.Height = BoardConfig.length;
-        for (i = 0; i < BoardConfig.length; i++) {
-            Board.Width = Math.max(Board.Width, BoardConfig[i].length);
+        Board.Height = KanoodleBoardConfig.length;
+        for (i = 0; i < KanoodleBoardConfig.length; i++) {
+            Board.Width = Math.max(Board.Width, KanoodleBoardConfig[i].length);
         }
 
         Board.Layout = [];
         for (i = 0; i < Board.Width; i++) {
             var Col = new Array();
             for (j = 0; j < Board.Height; j++) {
-                if (BoardConfig[j].substring(i, i + 1) === "X") Col.push(-1);
+                if (KanoodleBoardConfig[j].substring(i, i + 1) === "X") Col.push(-1);
                 else Col.push(-2);
             }
             Board.Layout.push(Col);
@@ -446,8 +446,8 @@ export default function useKanoodleWithPuzzlePiece() {
     }
 
     return {
-        StartPuzzleWorker,
-        StopPuzzleWorker,
+        StartKanoodleWorker,
+        StopKanoodleWorker,
         WorkerStopped,
         MessageCb,
     }
