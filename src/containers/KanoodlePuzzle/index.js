@@ -16,7 +16,7 @@ const defaultTheme = createTheme();
 
 const KanoodlePuzzle = () => {
   const { StartWorker, StopWorker } = useKanoodle();
-  const { StartPuzzleWorker, StopPuzzleWorker } = useKanoodleWithPuzzlePiece();
+  const { StartKanoodleWorker, StopKanoodleWorker } = useKanoodleWithPuzzlePiece();
 
 
   return (
@@ -60,18 +60,18 @@ const KanoodlePuzzle = () => {
             >Stop
             </button>
             <br/>
-            <button
+            {/* <button
               className='border mt-4 justify-center content-center rounded-2xl p-4 all-btn-chessboard'
               id="startbtn"
-              onClick={() => StartPuzzleWorker()}
+              onClick={() => StartKanoodleWorker()}
             >Find Solutions of first puzzle only
             </button>
             <button
               className='border justify-center content-center rounded-2xl p-4 disabled'
               id="startbtn"
-              onClick={() => StopPuzzleWorker()}
+              onClick={() => StopKanoodleWorker()}
             >Stop puzzle only
-            </button>
+            </button> */}
             </CardContent>
           </Card>
           </Grid>

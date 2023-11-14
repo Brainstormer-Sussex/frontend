@@ -2,7 +2,7 @@ import $ from 'jquery'
 let i;
 
 export default function useKanoodle() {
-    var BoardConfig = [
+    var KanoodleBoardConfig = [
         "XXXXXXXXXXX",
         "XXXXXXXXXXX",
         "XXXXXXXXXXX",
@@ -10,98 +10,7 @@ export default function useKanoodle() {
         "XXXXXXXXXXX",
     ];
 
-    /*
-    var Pentominoes = [
-    {
-        Name: "L",
-        Layout: [
-        [1,1],
-        [1,2],
-        [1,3],
-        [1,4],[2,4]
-        ]},
-    {
-        Name: "l",
-        Layout: [
-        [1,1],
-        [1,2],
-        [1,3],[2,3]
-        ]},
-    {
-        Name: "i",
-        Layout: [
-        [1,1],
-        [1,2],[2,2]
-        ]},
-    {
-        Name: "N",
-        Layout: [
-              [2,1],
-              [2,2],
-        [1,3],[2,3],
-        [1,4]
-        ]},
-    {
-        Name: "V",
-        Layout: [
-        [1,1],
-        [1,2],
-        [1,3],[2,3],[3,3]
-        ]},
-    {
-        Name: "P",
-        Layout: [
-        [1,1],[2,1],
-        [1,2],[2,2],
-        [1,3]
-        ]},
-    {
-        Name: "S",
-        Layout: [
-        [1,1],[2,1],
-        [1,2],[2,2],
-        ]},
-    {
-        Name: "U",
-        Layout: [
-        [1,1],      [3,1],
-        [1,2],[2,2],[3,2]
-        ]},
-    {
-        Name: "W",
-        Layout: [
-        [1,1],
-        [1,2],[2,2],
-              [2,3],[3,3]
-        ]},
-    {
-        Name: "X",
-        Layout: [
-              [2,1],
-        [1,2],[2,2],[3,2],
-              [2,3]
-        ]},
-    {
-        Name: "Y",
-        Layout: [
-        [1,1],
-        [1,2],
-        [1,3],[2,3],
-        [1,4]
-        ]},
-    {
-        Name: "I",
-        Layout: [
-        [1,1],
-        [1,2],
-        [1,3],
-        [1,4],
-        ]},
-    ];
-    */
-
-
-    var Pentominoes = [
+    var puzzlePieces = [
         {
             Name: "L",
             Layout: [
@@ -219,7 +128,7 @@ export default function useKanoodle() {
 
         try {
             if (typeof (Worker) !== "undefined") {
-                WebWorker = new Worker(`${process.env.REACT_APP_PUBLIC_URL}/worker/app.worker.js`);
+                WebWorker = new Worker(new URL('./worker/app.worker.js', import.meta.url));
                 if (window.Worker) { 
                     // Web workers are supported
                     console.log("Web workers are supported")
@@ -308,14 +217,14 @@ export default function useKanoodle() {
         var CurShape;
         var i, j, k;
 
-        //    Debug("Using " + Pentominoes.length + " pentominoes: ", Pentominoes);
-        for (i = 0; i < Pentominoes.length; i++) {
+        //    Debug("Using " + puzzlePieces.length + " pentominoes: ", puzzlePieces);
+        for (i = 0; i < puzzlePieces.length; i++) {
             Shapes[i] = {}
             Shapes[i].Layout = [];
-            Shapes[i].Name = Pentominoes[i].Name;
-            Shapes[i].Colour = Pentominoes[i].Colour;
+            Shapes[i].Name = puzzlePieces[i].Name;
+            Shapes[i].Colour = puzzlePieces[i].Colour;
             for (k = 0; k < 3; k++) {
-                CurShape = Pentominoes[i].Layout;
+                CurShape = puzzlePieces[i].Layout;
                 switch (k) {
                     case 0:
                         CurShape = ShiftShape(CurShape);
@@ -336,7 +245,7 @@ export default function useKanoodle() {
                 }
             }
             /*
-                    Debug("Pentomino " + Pentominoes[i].Name + " has " + Shapes[i].Layout.length + " layouts");
+                    Debug("Pentomino " + puzzlePieces[i].Name + " has " + Shapes[i].Layout.length + " layouts");
                     for(var l=0; l<Shapes[i].Layout.length; l++){
                         Debug(Shapes[i].Layout[l].toString())
                     }
@@ -344,16 +253,16 @@ export default function useKanoodle() {
         }
 
         Board.Width = 0;
-        Board.Height = BoardConfig.length;
-        for (i = 0; i < BoardConfig.length; i++) {
-            Board.Width = Math.max(Board.Width, BoardConfig[i].length);
+        Board.Height = KanoodleBoardConfig.length;
+        for (i = 0; i < KanoodleBoardConfig.length; i++) {
+            Board.Width = Math.max(Board.Width, KanoodleBoardConfig[i].length);
         }
 
         Board.Layout = [];
         for (i = 0; i < Board.Width; i++) {
             var Col = new Array();
             for (j = 0; j < Board.Height; j++) {
-                if (BoardConfig[j].substring(i, i + 1) === "X") Col.push(-1);
+                if (KanoodleBoardConfig[j].substring(i, i + 1) === "X") Col.push(-1);
                 else Col.push(-2);
             }
             Board.Layout.push(Col);
