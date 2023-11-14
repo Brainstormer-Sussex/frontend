@@ -1,6 +1,7 @@
 {
   "name": "brainstormers-frontend",
   "version": "0.1.0",
+  "type": "module",
   "homepage": "https://Brainstormer-Sussex.github.io/frontend",
   "private": true,
   "dependencies": {
