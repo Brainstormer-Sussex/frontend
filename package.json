@@ -1,7 +1,7 @@
 {
   "name": "brainstormers-frontend",
   "version": "0.1.0",
-  "homepage": "https://Brainstormer-Sussex.github.io/frontend",
+  "homepage": "https://Brainstormer-Sussex.github.io",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -39,7 +39,7 @@
   "scripts": {
     "start": "react-scripts start",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -b master -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
