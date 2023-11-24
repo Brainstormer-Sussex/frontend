@@ -104,37 +104,29 @@ function Pieces() {
     new Array(pieceNames.length).fill(0)
   );
 
+
+//   Having a problem with the rotation.
   const rotatePiece = (degrees, piece) => {
     setPieceRotations((prevRotations) => ({
-      ...prevRotations,
-      [activePieceIndex]: (prevRotations[activePieceIndex] + degrees) % 360,
-    }));
-
+        ...prevRotations,
+        [activePieceIndex]: (prevRotations[activePieceIndex] + degrees) % 360,
+      }));
+      
     const rows = piece.length;
     const cols = piece[0].length;
 
-    // const rotatedArray = new Array(cols)
-    //   .fill(null)
-    //   .map(() => new Array(rows).fill(null));
-    const rotatedPiece = new Array(cols).fill(null).map(() => new Array(rows).fill(null));
-    console.log(rotatedPiece);
-    if (degrees === 90) {
-      for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-          rotatedPiece[j][rows - 1 - i] = piece[i][j];
-        }
-      }
-    } else if (degrees === -90) {
-      for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-          rotatedPiece[cols - 1 - j][i] = piece[i][j];
-        }
+    const rotatedArray = new Array(cols)
+      .fill(null)
+      .map(() => new Array(rows).fill(null));
+
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        rotatedArray[j][rows - 1 - i] = piece[i][j];
       }
     }
-
-    pieceNames[activePieceIndex] = rotatedPiece;
-    //console.log(pieceNames[activePieceIndex]);
-    return rotatedPiece;
+    pieceNames[activePieceIndex] = rotatedArray;
+    console.log(pieceNames[activePieceIndex])
+    return rotatedArray;
   };
 
   const nextPiece = () => {

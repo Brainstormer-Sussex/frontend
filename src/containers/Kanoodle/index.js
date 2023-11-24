@@ -11,9 +11,6 @@ import Pieces from "./Pieces";
 
 function Kanoodle() {
 
-
-
-
   const [boardLayout, setBoardLayout] = useState([
     // Define your Kanoodle board layout here
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
