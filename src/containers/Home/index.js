@@ -16,6 +16,9 @@ function Home(){
         <div className='border flex justify-center content-center m-4 rounded-2xl hover:cursor-pointer hover:bg-slate-300 hover:text-white' onClick={() => {navigate(ROUTE_CONSTANTS.KANOODLE)}}>
             <p className='m-2'>Kanoodle</p>
         </div>
+        <div className='border flex justify-center content-center m-4 rounded-2xl hover:cursor-pointer hover:bg-slate-300 hover:text-white' onClick={() => {navigate(ROUTE_CONSTANTS.POLYSPHERE)}}>
+            <p className='m-2'>Polysphere</p>
+        </div>
     </div>
   )
 }

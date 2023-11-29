@@ -2,6 +2,7 @@ export const ROUTE_CONSTANTS = {
     BASE: '/',
     HOME: '/home',
 	KANOODLE: '/kanoodle',
+	POLYSPHERE: '/Polysphere',
     ANY: '*',
 };
 
