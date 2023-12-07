@@ -18,7 +18,7 @@ function Home() {
 
   return (
     <>
-      <Header/>
+      <Header />
 
       <header class="t11-display-container t11-content t11-wide" id="home">
         <img class="t11-image" src={home} alt="Architecture" width="1500" height="800" />
@@ -40,24 +40,30 @@ function Home() {
         </div>
         <div class="t11-row-padding">
           <div class="t11-col l3 m6 t11-margin-bottom">
-            <div class="t11-display-container">
+            <div class="t11-display-container"
+              onClick={() => {
+                navigate(ROUTE_CONSTANTS.NQUEEN)
+              }}>
               <div class="t11-display-topleft t11-black t11-padding">N-Queen</div>
               <img src={nqueen} alt="House" />
             </div>
           </div>
-          <div class="t11-col l3 m6 t11-margin-bottom">
+          <div class="t11-col l3 m6 t11-margin-bottom"
+            onClick={() => {
+              navigate(ROUTE_CONSTANTS.KANOODLE_PUZZLE)
+            }}>
             <div class="t11-display-container">
               <div class="t11-display-topleft t11-black t11-padding">Polysphere Puzzle</div>
               <img src={kanoodle} alt="House" />
             </div>
           </div>
-          <div class="t11-col l3 m6 t11-margin-bottom" onClick={() => {navigate(ROUTE_CONSTANTS.KANOODLE_PUZZLE)}}>
+          <div class="t11-col l3 m6 t11-margin-bottom" onClick={() => { navigate(ROUTE_CONSTANTS.POLYSPHERE_PYRAMID) }}>
             <div class="t11-display-container">
               <div class="t11-display-topleft t11-black t11-padding">Polysphere Pyramid</div>
               <img src={pyramid} alt="House" />
             </div>
           </div>
-          <div class="t11-col l3 m6 t11-margin-bottom">
+          <div class="t11-col l3 m6 t11-margin-bottom" onClick={() => { navigate(ROUTE_CONSTANTS.POLYSPHERE_PYRAMID) }}>
             <div class="t11-display-container">
               <div class="t11-display-topleft t11-black t11-padding">Free form</div>
               <img src={pyramid} alt="House" />
