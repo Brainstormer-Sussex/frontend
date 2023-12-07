@@ -187,28 +187,5 @@ export default function Puzzle(props) {
         </div>
     </Grid>
         </Grid>
-        <Grid
-            item
-            container
-            spacing={0}
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-            sx={{ minHeight: '24vh' }}
-        >
-            {
-                boardLayout.map((arr, i) => (
-                    <div className="flex" key={i}>
-                        {arr.map((arr2, j) => {
-                            return(
-                                <div key={`${i}-${j}`} className={`border wc w-10 h-10 ${boardLayout[i][j] === 1 ? 'cL' : ''}`}>
-                                {/* { boardLayout[i][j]} */}
-                            </div>
-                            )
-                        })}
-                    </div>
-                ))
-            }
-        </Grid>
     </>;
 }

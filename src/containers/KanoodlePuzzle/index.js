@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import useKanoodle from "./hooks/kanoodle";
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Header } from "../../components";
 import { Card, CardContent, Typography, CssBaseline, Grid, Container, CardActionArea } from "@mui/material";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -21,14 +22,18 @@ const KanoodlePuzzle = () => {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <Header/>
       <CssBaseline />
-      <Container maxWidth="lg">
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <Container maxWidth="lg" className="mt-5">
         <main>
           <MainFeaturedPost />
           <DndProvider backend={HTML5Backend}>
             <Puzzle />
           </DndProvider>
-       
           <Grid 
             item 
             container
@@ -75,9 +80,6 @@ const KanoodlePuzzle = () => {
             </CardContent>
           </Card>
           </Grid>
-          <Fragment>
-            
-          </Fragment>
           <Grid container spacing={3} sx={{ mt: 3 }} className="grid-center">
             <div id="debug"></div>
           </Grid>

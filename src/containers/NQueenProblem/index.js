@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-    NavBar
+    Header
 } from '../../components'
 import {
     chessBoardAction
@@ -203,7 +203,12 @@ function NQueenProblem() {
 
     return (
         <div>
-            <NavBar />
+        <Header/>
+        
+      <br/>
+      <br/>
+      <br/>
+      <br/>
             <div className='flex justify-center m-12'>
                 <h1 className='text-5xl font-medium'>N-Queen</h1>
             </div>
