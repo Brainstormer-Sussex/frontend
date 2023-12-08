@@ -4,7 +4,8 @@ import {
 	Home,
 	NQueenProblem,
 	Kanoodle,
-	KanoodlePuzzle
+	KanoodlePuzzle,
+	PolySpherePyramidPuzzle
 } from "../../containers";
 
 
@@ -16,7 +17,7 @@ export const ROUTES = [
 		view: 'Group 11',
 	},
 	{
-		path: ROUTE_CONSTANTS.HOME,
+		path: ROUTE_CONSTANTS.NQUEEN,
 		exact: true,
 		element: <NQueenProblem/>,
 		view: 'NQueen Problem Home',
@@ -32,5 +33,11 @@ export const ROUTES = [
 		exact: true,
 		element: <KanoodlePuzzle/>,
 		view: 'kanoodle puzzle',
+	},
+	{
+		path: ROUTE_CONSTANTS.POLYSPHERE_PYRAMID,
+		exact: true,
+		element: <PolySpherePyramidPuzzle/>,
+		view: 'polysphere pyramid puzzle',
 	},
 ];

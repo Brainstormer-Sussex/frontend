@@ -12,7 +12,7 @@ const NavBar = () => {
         <FiChevronLeft  onClick={ () => {navigate(ROUTE_CONSTANTS.BASE)}}/>
        </div>
        <div className=''>
-          <div className=' border  hover:cursor-pointer underline m-2 hover:bg-slate-300' onClick={ () => {navigate(ROUTE_CONSTANTS.HOME)}}>
+          <div className=' border  hover:cursor-pointer underline m-2 hover:bg-slate-300' onClick={ () => {navigate(ROUTE_CONSTANTS.NQUEEN)}}>
               N-Queen
           </div>
           <div className='  hover:cursor-pointer underline m-2 hover:bg-slate-300' onClick={ () => {navigate(ROUTE_CONSTANTS.KANOODLE)}}>

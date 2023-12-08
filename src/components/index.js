@@ -1,7 +1,7 @@
 import LoadingSpinner from "./LoadingSpinner";
-import NavBar from "./layouts/NavBar";
+import Header from "./layouts/header";
 
 export {
     LoadingSpinner,
-    NavBar
+    Header
 }

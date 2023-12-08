@@ -1,0 +1,29 @@
+.container {
+    text-align: center;
+}
+
+.panel {
+    display: flex;
+    margin: 0 auto;
+    width: 500px;
+    height: 500px;
+    background-color: #1976d2;
+}
+
+.text-right{
+    display: flex;
+    gap: 10px; /*also you can use gap to give a space between them*/
+}
+
+.text-wrap{
+    display: flex;
+    gap: 10px; /*also you can use gap to give a space between them*/
+}
+
+.canvas {
+    margin: 0;
+    padding: 0;
+    position: static;
+    top: 0;
+    left: 0;
+}

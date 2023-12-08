@@ -1,8 +1,9 @@
 export const ROUTE_CONSTANTS = {
     BASE: '/',
-    HOME: '/home',
+    NQUEEN: '/home',
 	KANOODLE: '/kanoodle',
 	KANOODLE_PUZZLE: '/kanoodle-puzzle',
+	POLYSPHERE_PYRAMID: '/polysphere-pyramid',
     ANY: '*',
 };
 
