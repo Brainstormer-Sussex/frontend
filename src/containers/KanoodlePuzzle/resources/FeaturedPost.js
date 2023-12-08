@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
-import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 
-function FeaturedPost(props) {
+function ContentSection(props) {
   const { post } = props;
 
   return (
@@ -37,7 +36,7 @@ function FeaturedPost(props) {
   );
 }
 
-FeaturedPost.propTypes = {
+ContentSection.propTypes = {
   post: PropTypes.shape({
     date: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
@@ -47,4 +46,4 @@ FeaturedPost.propTypes = {
   }).isRequired,
 };
 
-export default FeaturedPost;
+export default ContentSection;

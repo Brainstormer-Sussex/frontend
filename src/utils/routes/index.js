@@ -4,7 +4,8 @@ import {
 	Home,
 	NQueenProblem,
 	Kanoodle,
-	KanoodlePuzzle
+	KanoodlePuzzle,
+	PolySpherePyramidPuzzle
 } from "../../containers";
 
 
@@ -36,7 +37,7 @@ export const ROUTES = [
 	{
 		path: ROUTE_CONSTANTS.POLYSPHERE_PYRAMID,
 		exact: true,
-		element: <KanoodlePuzzle/>,
+		element: <PolySpherePyramidPuzzle/>,
 		view: 'polysphere pyramid puzzle',
 	},
 ];

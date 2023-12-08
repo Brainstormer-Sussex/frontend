@@ -6,10 +6,10 @@ import {
     SphereGeometry, MeshPhongMaterial, Mesh, PlaneGeometry, Color, PCFSoftShadowMap, Raycaster, Vector2, Vector3, RectAreaLight, AxesHelper
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { setSphereColor, worker } from './PolyPyramidUI';
+import { setSphereColor, worker } from '.';
 const scene = new Scene();
 const camera = new PerspectiveCamera();
-scene.background = new Color(0x333333);
+scene.background = new Color(0xeaeaea);
 const globalLight = new AmbientLight(0xeeeeee);
 scene.add(globalLight);
 const light = new PointLight(0xffffff, 1, 100);
@@ -53,18 +53,18 @@ export let inputCoords = {
 };
 
 const Colours = {
-    "A": 0xff0000,
-    "B": 0xff0080,
-    "C": 0xff99cc,
-    "D": 0x0000ff,
-    "E": 0xffff00,
-    "F": 0xcc6699,
-    "G": 0x660033,
-    "H": 0x4dff4d,
-    "I": 0xe65c00,
-    "J": 0x006600,
-    "K": 0xff9900,
-    "L": 0x00bfff
+    "A": 0x680000,
+    "B": 0xA30052,
+    "C": 0x533242,
+    "D": 0x000082,
+    "E": 0xCCCC00,
+    "F": 0xF1D7E4,
+    "G": 0xE5D5DD,
+    "H": 0x8DFF8D,
+    "I": 0xEF975C,
+    "J": 0x338533,
+    "K": 0xFFBD5C,
+    "L": 0xBDEEFF
 }
 
 export function initScene(canvas) {
@@ -145,7 +145,7 @@ export function initScene(canvas) {
                 // Get only visibile objects
                 if (intersects[i].object.name[0] === "s") {
                     // Get only sphere's
-                    if (intersects[i].object.material.color.equals(new Color(0x233333))) {
+                    if (intersects[i].object.material.color.equals(new Color(0x0000ffff))) {
                         // Get only empty spheres (colour = black)
                         intersects[i].object.material.color.set(Colours[shape]);
                         let coord = arrayCoordsFromWorldCoords(intersects[i].object.position.x, intersects[i].object.position.z, intersects[i].object.position.y);
@@ -169,19 +169,19 @@ export function initScene(canvas) {
 
     canvas.appendChild(renderer.domElement);
 
-    // 创建一个地面
+    // create a ground
     const meshfloor = new Mesh(
         new PlaneGeometry(130, 130, 10, 10),
         new MeshPhongMaterial({
-            color: 0x1B5E20,
+            color: 0x0000ffff,
             wireframe: false
         })
     )
     meshfloor.rotation.x -= Math.PI / 2;
-    // 地面同样设置去接受光源
+    // The ground is also set up to receive light sources
     meshfloor.receiveShadow = true;
 
-    // 将所有创建的物体加入到场景中去
+    // Add all created objects to the scene
     scene.add(meshfloor);
     light.position.set(4, 20, 4);
 

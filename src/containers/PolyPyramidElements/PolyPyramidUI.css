@@ -7,7 +7,12 @@
     margin: 0 auto;
     width: 500px;
     height: 500px;
-    background-color: #000;
+    background-color: #1976d2;
+}
+
+.text-right{
+    display: flex;
+    gap: 10px; /*also you can use gap to give a space between them*/
 }
 
 .canvas {
