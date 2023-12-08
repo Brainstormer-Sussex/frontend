@@ -162,21 +162,23 @@ class PolySpherePyramidPuzzle extends React.Component {
 
     // Used to draw solution pyramid (position output from backend)
     drawPosition(position) {
-        for (let layer = 0; layer < position.length; layer++) {
-            for (let i = 0; i < position[layer].length; i++) {
-                for (let j = 0; j < position[layer].length; j++) {
-                    if (["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"].indexOf(position[layer][i][j]) !== -1) {
-                        // Set to shape colour
-                        worker.getLayer(5 - layer).set(i, j, Colours[position[layer][i][j]]);
-                    }
-                    else {
-                        // Set to black to indicate empty
-                        worker.getLayer(5 - layer).set(i, j, 0xc0cccc);
+        if (position) {
+            for (let layer = 0; layer < position.length; layer++) {
+                for (let i = 0; i < position[layer].length; i++) {
+                    for (let j = 0; j < position[layer].length; j++) {
+                        if (["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"].indexOf(position[layer][i][j]) !== -1) {
+                            // Set to shape colour
+                            worker.getLayer(5 - layer).set(i, j, Colours[position[layer][i][j]]);
+                        }
+                        else {
+                            // Set to black to indicate empty
+                            worker.getLayer(5 - layer).set(i, j, 0x000000);
+                        }
                     }
                 }
             }
+            renderPyramid();
         }
-        renderPyramid();
     }
 
     checkInput(shapes, coords) {

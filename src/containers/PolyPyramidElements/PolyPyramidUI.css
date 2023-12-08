@@ -15,6 +15,11 @@
     gap: 10px; /*also you can use gap to give a space between them*/
 }
 
+.text-wrap{
+    display: flex;
+    gap: 10px; /*also you can use gap to give a space between them*/
+}
+
 .canvas {
     margin: 0;
     padding: 0;
