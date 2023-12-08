@@ -1,7 +1,7 @@
 {
   "name": "brainstormers-frontend",
   "version": "0.1.0",
-  "homepage": "http://Brainstormer-Sussex.github.io",
+  "homepage": "http://Brainstormer-Sussex.github.io/frontend",
   "private": false,
   "dependencies": {
     "@emotion/react": "^11.11.1",
