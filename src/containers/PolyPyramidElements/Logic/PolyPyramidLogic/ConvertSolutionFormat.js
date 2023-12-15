@@ -1,6 +1,8 @@
 // Takes in solution array with elements corresponding to selected rows of the problem_matrix
 function convert_to_pyramid_layers(solution, problem_matrix, mat_header, start_shapes, start_squares) {
-    let num_unused_shapes = 12 - start_shapes.length;
+     // Initialize the output matrix for pyramid layers
+     
+     let num_unused_shapes = 12 - start_shapes.length;
     let out_mat = new Array(5);
     for (let i = 0; i < 5; i++) {
         out_mat[i] = new Array(5 - i);
@@ -12,6 +14,7 @@ function convert_to_pyramid_layers(solution, problem_matrix, mat_header, start_s
             out_mat[layer][row].fill(0);
         }
     }
+    // Place initial shapes into the output matrix
     //let out_mat = new Array(5).fill([]);
     //for (let layer = 4; layer > -1; layer--) {
     //    out_mat[4 - layer] = new Array(layer + 1).fill(new Array(layer + 1).fill(0));
@@ -24,6 +27,7 @@ function convert_to_pyramid_layers(solution, problem_matrix, mat_header, start_s
             out_mat[coord[2]][coord[0]][coord[1]] = shape;
         }
     }
+    // Process the solution array to update the output matrix
     for (let i = 0; i < solution.length; i++) {
         let selected_row = problem_matrix[solution[i]];
         let shape = "";

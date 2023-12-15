@@ -1,5 +1,5 @@
 import { Shape } from "./Shape.js";
-import {A, B, C, D, E, F, G, H, I, J, K, L} from "./Shapes.js";
+import {A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z} from "./Shapes.js";
 
 let shape_cols = {
     "A": 0,
@@ -13,7 +13,21 @@ let shape_cols = {
     "I": 8,
     "J": 9,
     "K": 10,
-    "L": 11
+    "L": 11,
+    "M": 12,
+    "N": 13,
+    "O": 14,
+    "P": 15,
+    "Q": 16,
+    "R": 17,
+    "S": 18,
+    "T": 19,
+    "U": 20,
+    "V": 21,
+    "W": 22,
+    "X": 23,
+    "Y": 24,
+    "Z": 25,
 };
 
 function coord_to_col(coord) {
@@ -32,7 +46,7 @@ function shape_to_row(shape) {
     return row;
 }
 
-let shapes = [A, B, C, D, E, F, G, H, I, J, K, L];
+let shapes = [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z];
 
 function populate_problem_matrix() {
     let problem_matrix = [];

@@ -2,18 +2,25 @@
 // Option 2: Import just the parts you need.
 import { useState } from 'react';
 import {
+    BackSide, Fog, HemisphereLight,
     Scene, PerspectiveCamera, AmbientLight, PointLightHelper, WebGLRenderer, PointLight,
     SphereGeometry, MeshPhongMaterial, Mesh, PlaneGeometry, Color, PCFSoftShadowMap, Raycaster, Vector2, Vector3, RectAreaLight, AxesHelper
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { setSphereColor, worker } from '.';
 const scene = new Scene();
 const camera = new PerspectiveCamera();
-scene.background = new Color(0xeaeaea);
-const globalLight = new AmbientLight(0xeeeeee);
+scene.background = new Color(0xf6f6f6);
+scene.fog = new Fog( 0xa0a0a0, 40, 100 );
+const globalLight = new AmbientLight(0x8e8e8e);
 scene.add(globalLight);
 const light = new PointLight(0xffffff, 1, 100);
 light.castShadow = true;
+
+
+const hemiLight = new HemisphereLight( 0xffffff, 0xe5e5e5, 3 );
+hemiLight.position.set( 0, 20, 0 );
+scene.add( hemiLight );
+
 const helper = new PointLightHelper(light, 2);
 scene.add(light);
 scene.add(helper);
@@ -64,19 +71,33 @@ const Colours = {
     "I": 0xEF975C,
     "J": 0x338533,
     "K": 0xFFBD5C,
-    "L": 0xBDEEFF
+    "L": 0xBDEEFF,
+    "M": 0xfff8f0,
+    "N": 0xFFC0CB,
+    "O": 0x7f6065,
+    "P": 0xa3c4bd,
+    "Q": 0xe1f0ed,
+    "R": 0xdad2b6,
+    "S": 0xb6ccc5,
+    "T": 0x714E8E,
+    "U": 0xc6b8d1,
+    "V": 0x8e714e,
+    "W": 0xaeae44,
+    "X": 0x516649,
+    "Y": 0xcd92a3,
+    "Z": 0xb3de84,
 }
 
 export function initScene(canvas) {
     //const axesHelper = new AxesHelper( 5 );
     //scene.add( axesHelper );
-    camera.fov = 45;
+    camera.fov = 30;
     camera.aspect = canvas.clientWidth / canvas.clientHeight;
-    camera.near = 0.2;
+    camera.near = 0.6;
     camera.far = 300;
-    camera.position.z = 18;
-    camera.position.x = -15
-    camera.position.y = 9;
+    camera.position.z = 25;
+    camera.position.x = -30
+    camera.position.y = 14;
     camera.addEventListener('onCameraChange', (e) => {
         console.log('change');
     })
@@ -97,7 +118,7 @@ export function initScene(canvas) {
     controls.screenSpacePanning = false;
     controls.maxDistance = 300;
 
-    controls.target = new Vector3(5, 3.8, 5);
+    controls.target = new Vector3(6, 3.8, 6);
     controls.maxPolarAngle = Math.PI / 2;
 
     function arrayCoordsFromWorldCoords(x, y, height) {
@@ -171,10 +192,21 @@ export function initScene(canvas) {
 
     // create a ground
     const meshfloor = new Mesh(
-        new PlaneGeometry(130, 130, 10, 10),
+        new PlaneGeometry(100, 100, 25, 25),
+        // new PlaneGeometry(130, 130, 10, 10),
         new MeshPhongMaterial({
+            transparent: true,
+            opacity: 1,
+            depthTest: true,
+            alphaTest: true,
             color: 0x0000ffff,
-            wireframe: false
+            emissive: 0x000000,
+            specular: 0xa49d9d,
+            wireframe: true,
+            vertexColors:true,
+            shininess: 80.9,
+            side: BackSide,
+            flatShading: true
         })
     )
     meshfloor.rotation.x -= Math.PI / 2;
@@ -183,23 +215,26 @@ export function initScene(canvas) {
 
     // Add all created objects to the scene
     scene.add(meshfloor);
-    light.position.set(4, 20, 4);
+    light.position.set(37, 40, 37);
 
     animate();
 }
 
 function createSphere(x, y, z, color, radius, segs) {
+    console.log("create sphere: radius: ", radius, " segs: ", segs)
     let mat = new MeshPhongMaterial({
         color: color,
         specular: color,
-        shininess: 30
+        shininess: 99,
+        // specular: 0xb4a2a2,
+        // flatShading: true,
     });
     mat.castShadow = true;
     mat.receiveShadow = true;
     let sphere = new Mesh(new SphereGeometry(radius, segs, segs), mat);
     sphere.position.set(x, z, y);
-    sphere.castShadow = true;
-    sphere.receiveShadow = true;
+    sphere.castShadow = false;
+    sphere.receiveShadow = false;
     sphere.name = ["s", x, y, z].join(",");
     return sphere;
 }
@@ -229,6 +264,12 @@ export default class {
 
     dispose() {
         resizeObeserver.disconnect();
-        cancelAnimationFrame();
+        // cancelAnimationFrame();
+        // requestAnimationFrame shim & fallback
+        window.requestAnimFrame = (function () {
+            return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+        })();
     }
 };

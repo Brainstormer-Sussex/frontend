@@ -21,7 +21,7 @@ class PyramidLayer {
             matrix.push([]);
             for (let j = 0; j < size; j++) {
                 matrix[i].push({
-                    color: 0x233333,
+                    color: 0x778080,
                     pos: calcPosition(size, radius, i, j, total),
                     userData: null
                 });
