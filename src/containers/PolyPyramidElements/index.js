@@ -14,8 +14,9 @@ import { Grid, } from "@mui/material";
 import { StyleProvider } from '@ant-design/cssinjs';
 import "./PolyPyramidUI.css";
 
+const maxLayerCnt = 5;
 // Create a five-level pyramid
-export let worker = new Pyramid(5, 1);
+export let worker = new Pyramid(maxLayerCnt, 1.25);
 const scene = new Scene();
 
 const FPS = 30;
@@ -47,17 +48,33 @@ const Colours = {
     "I": 0xe65c00,
     "J": 0x006600,
     "K": 0xff9900,
-    "L": 0x00bfff
+    "L": 0x00bfff,
+    "M": 0xfff8f0,
+    "N": 0xFFC0CB,
+    "O": 0x7f6065,
+    "P": 0xa3c4bd,
+    "Q": 0xe1f0ed,
+    "R": 0xdad2b6,
+    "S": 0xb6ccc5,
+    "T": 0x714E8E,
+    "U": 0xc6b8d1,
+    "V": 0x8e714e,
+    "W": 0xaeae44,
+    "X": 0x516649,
+    "Y": 0xcd92a3,
+    "Z": 0xb3de84,
 }
 
 // Change the color value stored in matrix
-export function setSphereColor(x, y, layer, color) {
-    worker.layers[layer][x][y].color.set(color);
-    console.log("Hi");
-    console.log(worker.layers[layer][x][y].color);
-}
+// export function setSphereColor(x, y, layer, color) {
+//     worker.layers[layer][x][y].color.set(color);
+//     console.log("Setting up sphere colors");
+//     console.log(worker.layers[layer][x][y].color);
+// }
 
-function renderPyramid() {
+function generatePyramid() {
+    console.log("generate pyramid");
+    console.log("worker: ", worker)
     for (let i = 0; i < worker.layers.length; i++) {
         const spheres = worker.layers[i].matrix;
         for (let x = 0; x < worker.layers[i].size; x++) {
@@ -78,23 +95,23 @@ function renderPyramid() {
     }
 }
 
-function disposePyramid() {
-    for (let i = 0; i < worker.layers.length; i++) {
-        const spheres = worker.layers[i].matrix;
-        for (let x = 0; x < worker.layers[i].size; x++) {
-            for (let y = 0; y < worker.layers[i].size; y++) {
-                if (!spheres[x][y].userData) {
-                    scene.disposeSphere(spheres[x][y].userData);
-                }
-            }
-        }
-    }
-}
+// function destroyPyramid() {
+//     for (let i = 0; i < worker.layers.length; i++) {
+//         const spheres = worker.layers[i].matrix;
+//         for (let x = 0; x < worker.layers[i].size; x++) {
+//             for (let y = 0; y < worker.layers[i].size; y++) {
+//                 if (!spheres[x][y].userData) {
+//                     scene.disposeSphere(spheres[x][y].userData);
+//                 }
+//             }
+//         }
+//     }
+// }
 
 
 
-function layerVisible(idx, v) {
-    console.log("layerVisible " + idx + v)
+function drawLayer(idx, v) {
+    console.log("drawLayer " + idx + v)
 
     let layer = worker.getLayer(idx);
     const spheres = layer.matrix;
@@ -118,20 +135,6 @@ let problem_def;
 let headers;
 let dicts;
 
-const items = [
-    {
-        key: '1',
-        label: '1st item',
-    },
-    {
-        key: '2',
-        label: '2nd item',
-    },
-    {
-        key: '3',
-        label: '3rd item',
-    },
-];
 
 class PolySpherePyramidPuzzle extends React.Component {
     constructor(props) {
@@ -147,6 +150,7 @@ class PolySpherePyramidPuzzle extends React.Component {
             sphere3: true,
             sphere4: true,
             sphere5: true,
+            sphere6: true,
         }
         this.onSolveButtonClick = this.onSolveButtonClick.bind(this);
         this.state = {
@@ -154,6 +158,7 @@ class PolySpherePyramidPuzzle extends React.Component {
             solutionCount: 0,
             solutions: [],
             isFourLevel: false,
+            isFifthLevel: false,
             checked: false
         }
     }
@@ -161,23 +166,24 @@ class PolySpherePyramidPuzzle extends React.Component {
 
 
     // Used to draw solution pyramid (position output from backend)
-    drawPosition(position) {
+    drawSolution(position) {
         if (position) {
             for (let layer = 0; layer < position.length; layer++) {
                 for (let i = 0; i < position[layer].length; i++) {
                     for (let j = 0; j < position[layer].length; j++) {
-                        if (["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"].indexOf(position[layer][i][j]) !== -1) {
+                        if (["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"].indexOf(position[layer][i][j]) !== -1) {
                             // Set to shape colour
-                            worker.getLayer(5 - layer).set(i, j, Colours[position[layer][i][j]]);
+                            console.log("draw solution: ")
+                            worker.getLayer(maxLayerCnt - layer).set(i, j, Colours[position[layer][i][j]]);
                         }
                         else {
-                            // Set to black to indicate empty
-                            worker.getLayer(5 - layer).set(i, j, 0x000000);
+                            // Set to default color to indicate empty
+                            worker.getLayer(maxLayerCnt - layer).set(i, j, 0x778080);
                         }
                     }
                 }
             }
-            renderPyramid();
+            generatePyramid();
         }
     }
 
@@ -199,18 +205,38 @@ class PolySpherePyramidPuzzle extends React.Component {
         if (this.state.isFourLevel) {
             document.getElementById("l5").checked = false;
             document.getElementById("l5").disabled = true;
-            layerVisible(5, false);
+            drawLayer(5, false);
             this.onClearButtonClick();
         }
         else {
             document.getElementById("l5").checked = true;
             document.getElementById("l5").disabled = false;
-            layerVisible(5, true);
+            drawLayer(5, true);
+            this.onClearButtonClick();
+        }
+    }
+
+    onFifthLevelCheckChange() {
+        this.setState({ isFifthLevel: !this.state.isFifthLevel }, () => this.onFifithLevelStateChange());
+    }
+
+    onFifithLevelStateChange() {
+        if (this.state.isFifthLevel) {
+            document.getElementById("l6").checked = false;
+            document.getElementById("l6").disabled = true;
+            drawLayer(6, false);
+            this.onClearButtonClick();
+        }
+        else {
+            document.getElementById("l6").checked = true;
+            document.getElementById("l6").disabled = false;
+            drawLayer(6, true);
             this.onClearButtonClick();
         }
     }
 
     onSolveButtonClick() {
+        console.log("--onSolveButtonClick--")
         this.setState({
             solutionCount: 0,
             solutions: [],
@@ -224,34 +250,20 @@ class PolySpherePyramidPuzzle extends React.Component {
         }
 
         problem_mat = populate_problem_matrix3D();
-        problem_def = reduce_problem_matrix(problem_mat, generate_headers(problem_mat), input_shapes, input_squares, this.state.isFourLevel);
+        problem_def = reduce_problem_matrix(problem_mat, generate_headers(problem_mat), input_shapes, input_squares, this.state.isFifthLevel);
+        // problem_def = reduce_problem_matrix(problem_mat, generate_headers(problem_mat), input_shapes, input_squares, this.state.isFourLevel);
         problem_mat = problem_def[0];
-        /*
-        let test = 0;
-        for (let i of problem_mat) {
-            //console.log(i);
-            if (i[0] === 1) {
-                for (let j = 12; j < 37; j++) {
-                    if (i[j] !== 0) {
-                        break;
-                    }
-                    if (j === 36) {
-                        console.log(i);
-                        test += 1;
-                    }
-                }
-            }
-        }*/
-        //console.log(test);
         headers = problem_def[1];
         console.log(problem_mat);
         console.log(headers);
-        dicts = create_dicts(problem_mat, headers, this.state.isFourLevel);
+        dicts = create_dicts(problem_mat, headers, this.state.isFifthLevel);
+        // dicts = create_dicts(problem_mat, headers, this.state.isFourLevel);
         console.log(Object.keys(dicts[0]).length);
-        console.log(dicts[0]);
-        console.log(dicts[1]);
-        console.log(headers);
-        let ret = solve(dicts[0], dicts[1], [], this.state.isFourLevel, headers);
+        // console.log(dicts[0]);
+        // console.log(dicts[1]);
+        // console.log(headers);
+        let ret = solve(dicts[0], dicts[1], [], this.state.isFifthLevel, headers);
+        // let ret = solve(dicts[0], dicts[1], [], this.state.isFourLevel, headers);
         let cnt = 0;
         createTimer(() => {
             let arr = ret.next().value;
@@ -266,12 +278,12 @@ class PolySpherePyramidPuzzle extends React.Component {
             this.setState({ solutionCount: cnt });
             let pyramid_layers = convert_to_pyramid_layers(arr, problem_mat, headers, input_shapes, input_squares);
             this.setState({ solutions: [...this.state.solutions, pyramid_layers] });
-            this.drawPosition(pyramid_layers);
+            this.drawSolution(pyramid_layers);
         });
     };
 
     onNextButtonClick() {
-        this.drawPosition(this.state.solutions.pop());
+        this.drawSolution(this.state.solutions.pop());
     }
 
     onClearButtonClick() {
@@ -293,7 +305,7 @@ class PolySpherePyramidPuzzle extends React.Component {
                 empty_position[layer][row].fill(0);
             }
         }
-        this.drawPosition(empty_position);
+        this.drawSolution(empty_position);
     };
 
     onStopButtonClick() {
@@ -304,7 +316,7 @@ class PolySpherePyramidPuzzle extends React.Component {
 
     componentDidMount() {
         scene.init(this.panel.current);
-        renderPyramid();
+        generatePyramid();
     }
 
     componentWillUnmount() {
@@ -312,20 +324,19 @@ class PolySpherePyramidPuzzle extends React.Component {
     }
 
     onInputClick() {
-        console.log(this.inputRef.shape.current.value);
-        console.log(this.inputRef.inputX.current.value);
-        console.log(this.inputRef.inputY.current.value);
-        console.log(this.inputRef.inputZ.current.value);
-
+        // console.log(this.inputRef.shape.current.value);
+        // console.log(this.inputRef.inputX.current.value);
+        // console.log(this.inputRef.inputY.current.value);
+        // console.log(this.inputRef.inputZ.current.value);
     }
 
     onMenuClick() {
         // console.log('click', e);
     };
 
-    onChange = (e) => {
-        this.setState({ checked: e.target.checked });
-    }
+    // onChange = (e) => {
+    //     this.setState({ checked: e.target.checked });
+    // }
 
     render() {
         return (
@@ -374,14 +385,14 @@ class PolySpherePyramidPuzzle extends React.Component {
                                                     type="primary"
                                                     onClick={() => this.onNextButtonClick()}
                                                 >
-                                                    Display Next
+                                                    Next Iteration
                                                 </Button>
                                                 <Button
                                                     type="secondary"
                                                     ghost
                                                     onClick={() => this.onClearButtonClick()}
                                                 >
-                                                    Clear
+                                                    Start again
                                                 </Button>
                                                 <Button
                                                     type="dashed"
@@ -389,13 +400,6 @@ class PolySpherePyramidPuzzle extends React.Component {
                                                     onClick={() => this.onStopButtonClick()}
                                                 >
                                                     Stop
-                                                </Button>
-                                                <Button
-                                                    id="isFourCheck"
-                                                    type="dashed"
-                                                    onClick={() => this.onFourLevelCheckChange()}
-                                                >
-                                                    Free form pyramid
                                                 </Button>
                                             </div>
                                         </Flex>
@@ -426,64 +430,109 @@ class PolySpherePyramidPuzzle extends React.Component {
                                         onKeyUp={(e) => { e.target.value = e.target.value.replace(/[^A-La-l]/g, '').toUpperCase(); }}
                                     />
                                     <br />
-                                    <div class="text-wrap">
-                                        <Button
-                                            size="small"
-                                            id="l1"
-                                            type="dashed"
-                                            value={this.state.sphere1}
-                                            onClick={(e) => {
-                                                this.setState({ sphere1: !this.state.sphere1 }, () => layerVisible(1, !this.state.sphere1))
-                                            }}
-                                        > 
-                                            <b>{this.state.sphere1 ? "Show" : "Hide"}</b> &nbsp; Pyramid Level 1
-                                        </Button>
-                                        
-                                        <Button
-                                            size="small"
-                                            id="l2"
-                                            type="dashed"
-                                            value={this.state.sphere2}
-                                            onClick={(e) => {
-                                                this.setState({ sphere2: !this.state.sphere2 }, () => layerVisible(2, !this.state.sphere2))
-                                            }}
-                                        > 
-                                            <b>{this.state.sphere2 ? "Show" : "Hide"}</b> &nbsp; Pyramid Level 2
-                                        </Button>
-                                        
-                                        <Button
-                                            size="small"
-                                            id="l3"
-                                            type="dashed"
-                                            value={this.state.sphere3}
-                                            onClick={(e) => {
-                                                this.setState({ sphere3: !this.state.sphere3 }, () => layerVisible(3, !this.state.sphere3))
-                                            }}
-                                        > 
-                                            <b>{this.state.sphere3 ? "Show" : "Hide"}</b> &nbsp; Pyramid Level 3
-                                        </Button>
-                                        <Button
-                                            size="small"
-                                            id="l4"
-                                            type="dashed"
-                                            value={this.state.sphere4}
-                                            onClick={(e) => {
-                                                this.setState({ sphere4: !this.state.sphere4 }, () => layerVisible(4, !this.state.sphere4))
-                                            }}
-                                        > 
-                                            <b>{this.state.sphere4 ? "Show" : "Hide"}</b> &nbsp; Pyramid Level 4
-                                        </Button>
-                                        <Button
-                                            size="small"
-                                            id="l5"
-                                            type="dashed"
-                                            value={this.state.sphere5}
-                                            onClick={(e) => {
-                                                this.setState({ sphere5: !this.state.sphere5 }, () => layerVisible(5, !this.state.sphere5))
-                                            }}
-                                        > 
-                                            <b>{this.state.sphere5 ? "Show" : "Hide"}</b> &nbsp; Pyramid Level 5
-                                        </Button>
+                                    
+                                    <Flex gap="middle" horizontal>
+                                            <Flex horizontal>
+                                                <Button
+                                                    id="isFourCheck"
+                                                    type="dashed"
+                                                    onClick={() => this.onFourLevelCheckChange()}
+                                                >
+                                                    Free form pyramid 5 level pyramind
+                                                </Button>
+                                                <Button
+                                                    id="isFifthCheck"
+                                                    type="dashed"
+                                                    className="ml-3"
+                                                    onClick={() => this.onFifithLevelStateChange()}
+                                                >
+                                                    Free form pyramid
+                                                </Button>
+                                            </Flex>
+                                        </Flex>
+                                    <div class="text-wrap mt-3">
+                                        <Flex gap="middle" vertical>
+                                            <Flex vertical={'vertical'}>
+                                                <div key="1-btn">
+                                                    <Button
+                                                        size="small"
+                                                        id="l1"
+                                                        type="dashed"
+                                                        value={this.state.sphere1}
+                                                        onClick={(e) => {
+                                                            this.setState({ sphere1: !this.state.sphere1 }, () => drawLayer(1, !this.state.sphere1))
+                                                        }}
+                                                    >
+                                                        <b>{this.state.sphere1 ? "Show" : "Hide"}</b> &nbsp; Polysphere Pyramid Layer 1
+                                                    </Button>
+                                                </div>
+                                                <div key="2-btn" className="mt-3">
+                                                    <Button
+                                                        size="small"
+                                                        id="l2"
+                                                        type="dashed"
+                                                        value={this.state.sphere2}
+                                                        onClick={(e) => {
+                                                            this.setState({ sphere2: !this.state.sphere2 }, () => drawLayer(2, !this.state.sphere2))
+                                                        }}
+                                                    >
+                                                        <b>{this.state.sphere2 ? "Show" : "Hide"}</b> &nbsp; Polysphere Pyramid Layer 2
+                                                    </Button>
+                                                </div>
+                                                <div key="3-btn" className="mt-3">
+
+                                                    <Button
+                                                        size="small"
+                                                        id="l3"
+                                                        type="dashed"
+                                                        value={this.state.sphere3}
+                                                        onClick={(e) => {
+                                                            this.setState({ sphere3: !this.state.sphere3 }, () => drawLayer(3, !this.state.sphere3))
+                                                        }}
+                                                    >
+                                                        <b>{this.state.sphere3 ? "Show" : "Hide"}</b> &nbsp; Polysphere Pyramid Layer 3
+                                                    </Button>
+                                                </div>
+                                                <div key="4-btn" className="mt-3">
+                                                    <Button
+                                                        size="small"
+                                                        id="l4"
+                                                        type="dashed"
+                                                        value={this.state.sphere4}
+                                                        onClick={(e) => {
+                                                            this.setState({ sphere4: !this.state.sphere4 }, () => drawLayer(4, !this.state.sphere4))
+                                                        }}
+                                                    >
+                                                        <b>{this.state.sphere4 ? "Show" : "Hide"}</b> &nbsp; Polysphere Pyramid Layer 4
+                                                    </Button>
+                                                </div>
+                                                <div key="5-btn" className="mt-3">
+                                                    <Button
+                                                        size="small"
+                                                        id="l5"
+                                                        type="dashed"
+                                                        value={this.state.sphere5}
+                                                        onClick={(e) => {
+                                                            this.setState({ sphere5: !this.state.sphere5 }, () => drawLayer(5, !this.state.sphere5))
+                                                        }}
+                                                    >
+                                                        <b>{this.state.sphere5 ? "Show" : "Hide"}</b> &nbsp; Polysphere Pyramid Layer 5
+                                                    </Button>
+                                                </div>
+                                                <div key="6-btn" className="mt-3">
+                                                    <Button
+                                                        size="small"
+                                                        id="l5"
+                                                        type="dashed"
+                                                        value={this.state.sphere6}
+                                                        onClick={(e) => {
+                                                            this.setState({ sphere6: !this.state.sphere6 }, () => drawLayer(6, !this.state.sphere6))
+                                                        }}
+                                                    >
+                                                        <b>{this.state.sphere6 ? "Show" : "Hide"}</b> &nbsp; Polysphere Pyramid Layer 6
+                                                    </Button></div>
+                                            </Flex>
+                                        </Flex>
                                     </div>
                                 </div>
                             </div>
