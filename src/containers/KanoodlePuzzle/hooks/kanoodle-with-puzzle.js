@@ -1,8 +1,8 @@
 import $ from 'jquery'
 let i;
 
-const publicUrl = process.env.REACT_APP_PUBLIC_URL ?? "http://Brainstormer-Sussex.github.io/frontend";
-
+const publicUrl = process.env.REACT_APP_PUBLIC_URL ?? "https://ase.sara-Dev.co.uk/";
+console.log("public url: ", publicUrl)
 export default function useKanoodleWithPuzzlePiece() {
     var KanoodleBoardConfig = [
         "XXXXXXXXXXX",
