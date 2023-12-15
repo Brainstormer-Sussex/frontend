@@ -1,7 +1,8 @@
 import $ from 'jquery'
 let i;
 
-const publicUrl = process.env.REACT_APP_PUBLIC_URL ?? "https://ase.sara-Dev.co.uk/";
+
+const publicUrl = "https://localhost:3000/";
 console.log("public url: ", publicUrl)
 export default function useKanoodleWithPuzzlePiece() {
     var KanoodleBoardConfig = [
@@ -130,7 +131,7 @@ export default function useKanoodleWithPuzzlePiece() {
 
         try {
             if (typeof (Worker) !== "undefined") {
-                WebWorker = new Worker(`${publicUrl}/worker/app.worker.js`);
+                WebWorker = new Worker(`${process.env.PUBLIC_URL}/worker/app.worker.js`);
                 if (window.Worker) {
                     // Web workers are supported
                     console.log("Web workers are supported")

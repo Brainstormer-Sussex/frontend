@@ -1,7 +1,7 @@
 {
   "name": "brainstormers-frontend",
   "version": "0.1.0",
-  "homepage": "https://ase.sara-Dev.co.uk/",
+  "homepage": "http://Brainstormer-Sussex.github.io/",
   "private": false,
   "dependencies": {
     "@emotion/react": "^11.11.1",

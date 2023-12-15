@@ -187,5 +187,6 @@ export default function Puzzle(props) {
         </div>
     </Grid>
         </Grid>
+      
     </>;
 }

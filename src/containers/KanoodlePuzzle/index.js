@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import useKanoodle from "./hooks/kanoodle";
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Header } from "../../components";
 import { Card, CardContent, Typography, CssBaseline, Grid, Container, CardActionArea } from "@mui/material";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -17,23 +16,19 @@ const defaultTheme = createTheme();
 
 const KanoodlePuzzle = () => {
   const { StartWorker, StopWorker } = useKanoodle();
-  const { StartKanoodleWorker, StopKanoodleWorker } = useKanoodleWithPuzzlePiece();
+  const { StartPuzzleWorker, StopPuzzleWorker } = useKanoodleWithPuzzlePiece();
 
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Header/>
       <CssBaseline />
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <Container maxWidth="lg" className="mt-5">
+      <Container maxWidth="lg">
         <main>
           <MainFeaturedPost />
           <DndProvider backend={HTML5Backend}>
             <Puzzle />
           </DndProvider>
+       
           <Grid 
             item 
             container
@@ -64,19 +59,6 @@ const KanoodlePuzzle = () => {
               onClick={() => StopWorker()}
             >Stop
             </button>
-            <br/>
-            {/* <button
-              className='border mt-4 justify-center content-center rounded-2xl p-4 all-btn-chessboard'
-              id="startbtn"
-              onClick={() => StartKanoodleWorker()}
-            >Find Solutions of first puzzle only
-            </button>
-            <button
-              className='border justify-center content-center rounded-2xl p-4 disabled'
-              id="startbtn"
-              onClick={() => StopKanoodleWorker()}
-            >Stop puzzle only
-            </button> */}
             </CardContent>
           </Card>
           </Grid>

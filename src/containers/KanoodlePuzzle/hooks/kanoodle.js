@@ -131,7 +131,7 @@ export default function useKanoodle() {
 
         try {
             if (typeof (Worker) !== "undefined") {
-            WebWorker = new Worker(`${publicUrl}/worker/app.worker.js`);
+            WebWorker = new Worker(`${process.env.PUBLIC_URL}/worker/app.worker.js`);
                 if (window.Worker) { 
                     // Web workers are supported
                     console.log("Web workers are supported")
