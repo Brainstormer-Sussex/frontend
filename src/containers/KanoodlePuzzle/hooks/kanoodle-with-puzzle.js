@@ -1,8 +1,9 @@
 import $ from 'jquery'
 let i;
 
-const publicUrl = process.env.REACT_APP_PUBLIC_URL ?? "http://Brainstormer-Sussex.github.io/frontend";
 
+const publicUrl = "https://localhost:3000/";
+console.log("public url: ", publicUrl)
 export default function useKanoodleWithPuzzlePiece() {
     var KanoodleBoardConfig = [
         "XXXXXXXXXXX",
@@ -130,7 +131,7 @@ export default function useKanoodleWithPuzzlePiece() {
 
         try {
             if (typeof (Worker) !== "undefined") {
-                WebWorker = new Worker(`${publicUrl}/worker/app.worker.js`);
+                WebWorker = new Worker(`${process.env.PUBLIC_URL}/worker/app.worker.js`);
                 if (window.Worker) {
                     // Web workers are supported
                     console.log("Web workers are supported")
@@ -369,11 +370,11 @@ export default function useKanoodleWithPuzzlePiece() {
         var Col;
         var Table;
 
-        Table = '<table class="st">';
+        Table = '<table className="st">';
         for (Row = 0; Row < Board.Height; Row++) {
-            Table += '<tr class="sr">';
+            Table += '<tr className="sr">';
             for (Col = 0; Col < Board.Width; Col++) {
-                Table += '<td class="sc ' + CellClass(Board, Col, Row) + '"/>';
+                Table += '<td className="sc ' + CellClass(Board, Col, Row) + '"/>';
             }
             Table += "</tr>"
         }
@@ -389,11 +390,11 @@ export default function useKanoodleWithPuzzlePiece() {
         var Col;
         var Table;
 
-        Table = '<table id="worktable" class="wt">';
+        Table = '<table id="worktable" className="wt">';
         for (Row = 0; Row < Board.Height; Row++) {
-            Table += '<tr class="wr">';
+            Table += '<tr className="wr">';
             for (Col = 0; Col < Board.Width; Col++) {
-                Table += '<td id="workcell' + Col + "x" + Row + '" class="wc"/>';
+                Table += '<td id="workcell' + Col + "x" + Row + '" className="wc"/>';
             }
             Table += "</tr>"
         }
@@ -444,7 +445,7 @@ export default function useKanoodleWithPuzzlePiece() {
     }
 
     function Debug(Msg) {
-        $("#debug").append('<p class="debug">' + Msg + "</p>");
+        $("#debug").append('<p className="debug">' + Msg + "</p>");
     }
 
     return {

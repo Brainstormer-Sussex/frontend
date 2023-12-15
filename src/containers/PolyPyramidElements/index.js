@@ -369,7 +369,7 @@ class PolySpherePyramidPuzzle extends React.Component {
                                         }}
                                     >
                                         <Flex align="flex-start" gap="medium" vertical>
-                                            <div class="text-right">
+                                            <div className="text-right">
                                                 <Button
                                                     type="success"
                                                     ghost
@@ -450,7 +450,7 @@ class PolySpherePyramidPuzzle extends React.Component {
                                                 </Button>
                                             </Flex>
                                         </Flex>
-                                    <div class="text-wrap mt-3">
+                                    <div className="text-wrap mt-3">
                                         <Flex gap="middle" vertical>
                                             <Flex vertical={'vertical'}>
                                                 <div key="1-btn">

@@ -6,18 +6,18 @@ const Header = () => {
 
 
     return (
-        <div class="t11-top">
-            <div class="t11-bar t11-white t11-wide t11-padding t11-card">
-                <p href="#home" class="t11-bar-item t11-button" 
+        <div className="t11-top">
+            <div className="t11-bar t11-white t11-wide t11-padding t11-card">
+                <p href="#home" className="t11-bar-item t11-button" 
                     onClick={() => {
                         navigate(ROUTE_CONSTANTS.BASE)
                     }}
                 >
                     <u>Advanced Software Engineering</u> Group <b>11</b>
                 </p>
-                <div class="t11-right t11-hide-small">
+                <div className="t11-right t11-hide-small">
                     <p
-                        class="t11-bar-item t11-button"
+                        className="t11-bar-item t11-button"
                         onClick={() => {
                             navigate(ROUTE_CONSTANTS.NQUEEN)
                         }}
@@ -25,12 +25,12 @@ const Header = () => {
                         N-Queen
                     </p>
                     <p
-                        class="t11-bar-item t11-button"
+                        className="t11-bar-item t11-button"
                         onClick={() => { navigate(ROUTE_CONSTANTS.KANOODLE_PUZZLE) }}
                     > Polysphere
                     </p>
                     <p
-                        class="t11-bar-item t11-button"
+                        className="t11-bar-item t11-button"
                         onClick={() => { navigate(ROUTE_CONSTANTS.POLYSPHERE_PYRAMID) }}
                     >
                         Polysphere Pyramid

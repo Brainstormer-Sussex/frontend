@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-    Header
-} from '../../components'
-import {
     chessBoardAction
 } from '../../store/action'
 
@@ -12,6 +9,7 @@ import '../../App.css';
 import Queen from '../../assets/images/queen.png'
 import Queen1 from '../../assets/images/queen-1.png'
 import { HELPER } from '../../utils';
+import { Header } from '../../components';
 
 function NQueenProblem() {
     let dispatch = useDispatch()
@@ -26,7 +24,7 @@ function NQueenProblem() {
     const [dimension, setDimension] = useState(dimensions);
     const [chess, setChess] = useState(100 / dimension);
     const [size, setSize] = useState(0);
-    // const [clickedCell, setClickedCell] = useState(null);
+    const [clickedCell, setClickedCell] = useState(null);
     const [queens, setQueens] = useState();
     const [queenPositions, setQueenPositions] = useState([]);
     const [focusedPermutation, setFocusedPermutation] = useState([]);
@@ -62,17 +60,17 @@ function NQueenProblem() {
                 if ((i + j) % 2) {
                     queenPositionFound = queenPositions.find((position) => position.row === i && position.col === j);
                     cssStyle = { ...black, width: `${size}%`, height: `${size}%` };
-                    if(queenPositionFound) {
+                    if (queenPositionFound) {
                         cssStyle = { ...black, width: `${size}%`, height: `${size}%`, overflow: `hidden`, textAlign: `center` };
                     }
                 } else {
                     queenPositionFound = queenPositions.find((position) => position.row === i && position.col === j);
                     cssStyle = { ...white, width: `${size}%`, height: `${size}%` };
-                    if(queenPositionFound) {
+                    if (queenPositionFound) {
                         cssStyle = { ...white, width: `${size}%`, height: `${size}%`, overflow: `hidden`, textAlign: `center` };
                     }
                 }
-                
+
                 temp.push(
                     <div style={cssStyle} onClick={() => placeQueenOnChessBoard(i, j)} key={`i-${j}`}>
                         {queenPositionFound && (
@@ -87,9 +85,9 @@ function NQueenProblem() {
         setChess(arr)
     }
 
-    
+
     const drawPossibleNQueenPermutations = () => {
-        if(focusedPermutation) {
+        if (focusedPermutation) {
             let arr = [];
             for (let i = 0; i < dimension; i++) {
                 let temp = [];
@@ -99,17 +97,17 @@ function NQueenProblem() {
                     if ((i + j) % 2) {
                         queenPositionFound = focusedPermutation.find((position) => position.row === i && position.col === j);
                         cssStyle = { ...black, width: `${size}%`, height: `${size}%` };
-                        if(queenPositionFound) {
+                        if (queenPositionFound) {
                             cssStyle = { ...black, width: `${size}%`, height: `${size}%`, overflow: `hidden`, textAlign: `center` };
                         }
                     } else {
                         queenPositionFound = focusedPermutation.find((position) => position.row === i && position.col === j);
                         cssStyle = { ...white, width: `${size}%`, height: `${size}%` };
-                        if(queenPositionFound) {
+                        if (queenPositionFound) {
                             cssStyle = { ...white, width: `${size}%`, height: `${size}%`, overflow: `hidden`, textAlign: `center` };
                         }
                     }
-                    
+
                     temp.push(
                         <div style={cssStyle} onClick={() => placeQueenOnChessBoard(i, j)} key={`i-${j}`}>
                             {queenPositionFound && (
@@ -127,9 +125,9 @@ function NQueenProblem() {
     }
 
     const generateChessBoard = () => {
-        if(!HELPER.isNotEmpty(queenPositions) || queenPositions === []){
+        if (!HELPER.isNotEmpty(queenPositions) || queenPositions == []) {
             alert('Select queen position first');
-        }else{
+        } else {
             const value = parseInt(dimension, 10);
             setQueens(isNaN(value) ? 0 : value);
         }
@@ -142,14 +140,14 @@ function NQueenProblem() {
         makeChessBoard();
     }
 
-    const placeQueenOnChessBoard = async(row, col) => {
-        if((searching || resultFound) && queenPositions !== []){
+    const placeQueenOnChessBoard = async (row, col) => {
+        if ((searching || resultFound) && queenPositions != []) {
             alert('It is not allowed to move queen further. Possible permutation result should be loaded soon!!')
             return;
         }
 
         setQueenPositions([...queenPositions, { row, col }]);
-        // setClickedCell({ row, col });
+        setClickedCell({ row, col });
         makeChessBoard();
 
         const requestData = {
@@ -160,57 +158,55 @@ function NQueenProblem() {
     };
 
     const showAllChessBoardPermutations = (index = 0) => {
-            if(index in permutations){
-                let _permutations = []; 
-                permutations[index].map((value, key) => {
-                    value.map((valueA, keyA) => {
-                        if(valueA === 1) {
-                            return _permutations.push({row: key, col: keyA})
-                        }
-                    })
+        if (index in permutations) {
+            let _permutations = [];
+            permutations[index].map((value, key) => {
+                value.map((valueA, keyA) => {
+                    if (valueA == 1) {
+                        return _permutations.push({ row: key, col: keyA })
+                    }
                 })
-                setFocusedPermutation(_permutations);
-                setFocusedPermutationCount(index+1);
-            }else if(index === permutations.length && permutations.length > 0) {
-                showAllChessBoardPermutations(0)
-            }
-            else {
-                if(size > 0) {
-                    alert(`Permutation doesn't exists`)
-                }
-            }
+            })
+            setFocusedPermutation(_permutations);
+            setFocusedPermutationCount(index + 1);
+        } else if (index == permutations.length && permutations.length > 0) {
+            showAllChessBoardPermutations(0)
+        }
+        else {
+            alert(`Permutation doesn't exists`)
+        }
     }
 
     useEffect(() => {
         setSize(100 / dimension);
         makeChessBoard();
     }, [dimension, size])
-    
+
     useEffect(() => {
         makeChessBoard();
     }, [queenPositions])
 
     useEffect(() => {
-        if(focusedPermutationCount < 1){
+        if (focusedPermutationCount < 1) {
             showAllChessBoardPermutations(0);
         }
     }, [permutations])
-    
+
     useEffect(() => {
-        if(HELPER.isNotEmpty(focusedPermutation) && focusedPermutation !== []){
+        if (HELPER.isNotEmpty(focusedPermutation) && focusedPermutation != []) {
             drawPossibleNQueenPermutations()
         }
     }, [focusedPermutation])
-    
+
 
     return (
         <div>
-        <Header/>
-        
-      <br/>
-      <br/>
-      <br/>
-      <br/>
+            <Header />
+
+            <br />
+            <br />
+            <br />
+            <br />
             <div className='flex justify-center m-12'>
                 <h1 className='text-5xl font-medium'>N-Queen</h1>
             </div>
@@ -222,33 +218,33 @@ function NQueenProblem() {
                     <br />
                     <p>Enter a number to see the solutions: </p>
                     <input
-                        value={dimension ?? ''} 
+                        value={dimension ?? ''}
                         type="number"
                         placeholder='N'
                         className='border mt-6'
                         onChange={event => handleChessBoardDimensions(event)}
                     />
                     {
-                        (searching || resultFound) ? "" : <button 
+                        (searching || resultFound) ? "" : <button
                             className='border flex mt-4 justify-center content-center rounded-2xl p-4 btn-chessboard'
                             onClick={generateChessBoard}
                         >Generate N-Queen permutations
                         </button>
                     }
                     {
-                        (searching || resultFound) ? 
-                        <>
-                            <button 
-                                className='border flex mt-4 justify-center content-center rounded-2xl p-4 all-btn-chessboard'
-                                onClick={() => showAllChessBoardPermutations(focusedPermutationCount)}
-                            >{focusedPermutationCount} / {permutations.length} possible permutations 
-                            </button>
-                            <button 
-                                className='border flex mt-4 justify-center content-center rounded-2xl p-4 btn-chessboard'
+                        (searching || resultFound) ?
+                            <>
+                                <button
+                                    className='border flex mt-4 justify-center content-center rounded-2xl p-4 all-btn-chessboard'
+                                    onClick={() => showAllChessBoardPermutations(focusedPermutationCount)}
+                                >{focusedPermutationCount} / {permutations.length} possible permutations
+                                </button>
+                                <button
+                                    className='border flex mt-4 justify-center content-center rounded-2xl p-4 btn-chessboard'
                                 // onClick={generateChessBoard}
-                            >{allPermutations.length} total permutations on chessboard
-                            </button>
-                        </> : ""
+                                >{allPermutations.length} total permutations on chessboard
+                                </button>
+                            </> : ""
                     }
                 </div>
                 <div className='m-2 col-6 flex ml-20 justify-center content-centerborder border'>
