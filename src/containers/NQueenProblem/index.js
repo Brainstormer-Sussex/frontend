@@ -160,23 +160,25 @@ function NQueenProblem() {
     };
 
     const showAllChessBoardPermutations = (index = 0) => {
-        if(index in permutations){
-            let _permutations = []; 
-            permutations[index].map((value, key) => {
-                value.map((valueA, keyA) => {
-                    if(valueA === 1) {
-                        return _permutations.push({row: key, col: keyA})
-                    }
+            if(index in permutations){
+                let _permutations = []; 
+                permutations[index].map((value, key) => {
+                    value.map((valueA, keyA) => {
+                        if(valueA === 1) {
+                            return _permutations.push({row: key, col: keyA})
+                        }
+                    })
                 })
-            })
-            setFocusedPermutation(_permutations);
-            setFocusedPermutationCount(index+1);
-        }else if(index === permutations.length && permutations.length > 0) {
-            showAllChessBoardPermutations(0)
-        }
-        else {
-            alert(`Permutation doesn't exists`)
-        }
+                setFocusedPermutation(_permutations);
+                setFocusedPermutationCount(index+1);
+            }else if(index === permutations.length && permutations.length > 0) {
+                showAllChessBoardPermutations(0)
+            }
+            else {
+                if(size > 0) {
+                    alert(`Permutation doesn't exists`)
+                }
+            }
     }
 
     useEffect(() => {

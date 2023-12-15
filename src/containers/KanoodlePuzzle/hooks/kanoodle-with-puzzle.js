@@ -1,6 +1,8 @@
 import $ from 'jquery'
 let i;
 
+const publicUrl = process.env.REACT_APP_PUBLIC_URL ?? "http://Brainstormer-Sussex.github.io/frontend";
+
 export default function useKanoodleWithPuzzlePiece() {
     var KanoodleBoardConfig = [
         "XXXXXXXXXXX",
@@ -128,7 +130,7 @@ export default function useKanoodleWithPuzzlePiece() {
 
         try {
             if (typeof (Worker) !== "undefined") {
-                WebWorker = new Worker(`${process.env.REACT_APP_PUBLIC_URL}/worker/app.worker.js`);
+                WebWorker = new Worker(`${publicUrl}/worker/app.worker.js`);
                 if (window.Worker) {
                     // Web workers are supported
                     console.log("Web workers are supported")
