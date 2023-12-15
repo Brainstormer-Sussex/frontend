@@ -519,18 +519,6 @@ class PolySpherePyramidPuzzle extends React.Component {
                                                         <b>{this.state.sphere5 ? "Show" : "Hide"}</b> &nbsp; Polysphere Pyramid Layer 5
                                                     </Button>
                                                 </div>
-                                                <div key="6-btn" className="mt-3">
-                                                    <Button
-                                                        size="small"
-                                                        id="l5"
-                                                        type="dashed"
-                                                        value={this.state.sphere6}
-                                                        onClick={(e) => {
-                                                            this.setState({ sphere6: !this.state.sphere6 }, () => drawLayer(6, !this.state.sphere6))
-                                                        }}
-                                                    >
-                                                        <b>{this.state.sphere6 ? "Show" : "Hide"}</b> &nbsp; Polysphere Pyramid Layer 6
-                                                    </Button></div>
                                             </Flex>
                                         </Flex>
                                     </div>
