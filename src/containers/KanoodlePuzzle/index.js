@@ -10,6 +10,7 @@ import MainFeaturedPost from "./resources/FeaturedPost";
 
 import "./style.css";
 import useKanoodleWithPuzzlePiece from "./hooks/kanoodle-with-puzzle";
+import { Header } from "../../components";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -20,10 +21,13 @@ const KanoodlePuzzle = () => {
 
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <CssBaseline />
-      <Container maxWidth="lg">
-        <main>
+    <>
+      <Header />
+<br />
+<br />
+<br />
+<br />
+        <main className="mt-4">
           <MainFeaturedPost />
           <DndProvider backend={HTML5Backend}>
             <Puzzle />
@@ -75,9 +79,7 @@ const KanoodlePuzzle = () => {
             </CardActionArea>
           </Grid>
         </main>
-      </Container>
-    </ThemeProvider>
-
+</>
   );
 };
 
