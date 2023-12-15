@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <LoadingSpinner />
-      <Router basename={process.env.PUBLIC_URL}>
+      <Router>
         <Routes>
           {ROUTES.map((route, index) => {
             return <Route key={index} {...route} />
