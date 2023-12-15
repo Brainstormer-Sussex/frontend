@@ -160,7 +160,6 @@ function NQueenProblem() {
     };
 
     const showAllChessBoardPermutations = (index = 0) => {
-        if(size > 0) {
             if(index in permutations){
                 let _permutations = []; 
                 permutations[index].map((value, key) => {
@@ -176,9 +175,10 @@ function NQueenProblem() {
                 showAllChessBoardPermutations(0)
             }
             else {
-                alert(`Permutation doesn't exists`)
+                if(size > 0) {
+                    alert(`Permutation doesn't exists`)
+                }
             }
-        }
     }
 
     useEffect(() => {
