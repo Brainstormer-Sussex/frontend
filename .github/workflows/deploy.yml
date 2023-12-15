@@ -1,0 +1,13 @@
+name: master
+on: [push]
+
+jobs:
+    run-testimio-cli:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                node-version: '16.13.0'
+            - run: npm install -g @testim/testim-cli
+            - run: testim --token "utIncMZWBKc5eL2K88ML7S7F8VFQMFBkWytN8mbKnIU1bUstHm" --project "LimFApvHDXnRI6GAQWTH" --grid "Testim-Grid"
